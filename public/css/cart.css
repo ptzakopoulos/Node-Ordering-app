@@ -16,6 +16,12 @@
   align-items: center;
   border-bottom: 3px solid chocolate;
 }
+.cart .cart-product .buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
 .cart .cart-product h1 {
   min-width: 300px;
   font-size: 25px;
@@ -41,6 +47,10 @@
   font-weight: 900;
   border: none;
   font-size: 30px;
+  background-color: transparent;
+}
+.cart .cart-product .cart-product__increase {
+  color: green;
 }
 .cart .checkout {
   display: flex;

@@ -46,7 +46,7 @@ exports.getCart = (req, res, next) => {
     .populate("cart.items.productId")
     .then((user) => {
       const products = user.cart.items;
-      let totalProducts = 0
+      totalProducts = 0
 
       products.forEach(e => {
         totalProducts+= e.quantity
@@ -75,6 +75,26 @@ exports.postCart = (req, res, next) => {
         res.redirect('/')
     })
 };
+
+exports.postRemoveOne = (req,res,next) => {
+  const productId = req.body.productId
+
+  req.user.removeOneFromCart(productId)
+  .then(() => {
+    res.redirect('/cart')
+  })
+  .catch(err => console.error(err))
+}
+
+exports.postAddOne = (req,res,next) => {
+  const productId = req.body.productId
+
+  req.user.addOneToCart(productId)
+  .then(() => {
+    res.redirect('/cart')
+  })
+  .catch(err => console.error(err))
+}
 
 exports.postDeleteItem = (req,res,next) => {
   const productId = req.body.productId

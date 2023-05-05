@@ -54,8 +54,40 @@ userSchema.methods.addToCart = function (product) {
   return this.save();
 };
 
+userSchema.methods.removeOneFromCart = function (productId) {
+  const currentCart = [...this.cart.items]
+  const index = currentCart.findIndex(e => e.productId._id.toString() === productId.toString())
+  const updatedCart = currentCart.find(e => e.productId._id.toString() === productId.toString())
+  if(updatedCart.quantity > 1) {
+    updatedCart.quantity-= 1
+    currentCart.splice(index, 1, updatedCart)
+  } else {
+    currentCart.splice(index, 1)
+  }
+
+  const updated = {
+    items : currentCart
+  }
+  this.cart = updated
+  return this.save()
+}
+
+userSchema.methods.addOneToCart = function (productId) {
+  const currentCart = [...this.cart.items]
+  const index = currentCart.findIndex(e => e.productId._id.toString() === productId.toString())
+  const updatedCart = currentCart.find(e => e.productId._id.toString() === productId.toString())
+
+  updatedCart.quantity+= 1
+  currentCart.splice(index, 1, updatedCart)
+
+  const updated = {
+    items : currentCart
+  }
+  this.cart = updated
+  return this.save()
+}
+
 userSchema.methods.removeFromCart = function (productId) {
-  console.log(productId);
   const updatedCartItems = this.cart.items.filter((item) => {
     return item.productId.toString() !== productId.toString();
   });
