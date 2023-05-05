@@ -2,7 +2,7 @@ const navBar = document.getElementById('navBar')
 
 const onScrollHandler = (e) => {
 
-    if(pageYOffset > 50) {
+    if(pageYOffset > 0) {
         navBar.classList.add('onScroll')
     } else {
         navBar.classList.remove('onScroll')

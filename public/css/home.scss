@@ -8,6 +8,11 @@
     gap : 50px;
     border-radius: 20px;
     box-shadow: 10px 10px 10px 5px rgba(0,0,0,0.4);
+
+    .not-displayed {
+        display: none !important;
+    }
+
     .product-card {
         display: flex;
         justify-content: center;
@@ -107,7 +112,26 @@
             }
         }
     }
-}
+
+    .filter {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap : 10px;
+            
+        .filter-message {
+            font-size: 27px;
+            color : white;
+        }
+        #filter {
+            font-size: 20px;
+            border-radius: 25px;
+            padding : 5px;
+        }
+    }
+
+} //End of Product_field
 
 .add-product__container {
     width : 600px;

@@ -10,6 +10,9 @@
   border-radius: 20px;
   box-shadow: 10px 10px 10px 5px rgba(0, 0, 0, 0.4);
 }
+.products-field .not-displayed {
+  display: none !important;
+}
 .products-field .product-card {
   display: flex;
   justify-content: center;
@@ -104,6 +107,22 @@
   transform: scale(1.1);
   box-shadow: 25px 10px 10px 5px rgba(0, 0, 0, 0.3);
   filter: brightness(1.7);
+}
+.products-field .filter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.products-field .filter .filter-message {
+  font-size: 27px;
+  color: white;
+}
+.products-field .filter #filter {
+  font-size: 20px;
+  border-radius: 25px;
+  padding: 5px;
 }
 
 .add-product__container {

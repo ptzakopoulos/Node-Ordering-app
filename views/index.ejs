@@ -23,6 +23,14 @@
                     <input class="input"  type="number" name="price" />
                 </div>
                 <div class="add-product__section">
+                    <label>Type</label>
+                    <select name="type">
+                        <option value="mexican">Mexican</option>
+                        <option value="italian">Italian</option>
+                        <option value="greek">Greek</option>
+                    </select>
+                </div>
+                <div class="add-product__section">
                     <label>Description</label>
                     <textarea class="input"  type="text" name="description"></textarea>
                 </div>
@@ -35,9 +43,10 @@
     </div>
 <% } %>
 <div class="products-field">
+    <%- include('./user/productFilter.ejs') %>
   <% if(products.length > 0){ for(let product of products.reverse()) { %>
 
-  <div class="product-card">
+  <div class="product-card" productType="all <%= product.type %>">
     <div class="left-box">
       <img src="<%= product.imageUrl %>" alt="Image" />
       <div class="product-info">
