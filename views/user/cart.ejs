@@ -1,20 +1,25 @@
 <%- include('../includes/Head.ejs') %> <%- include('../includes/navigation.ejs')
 %>
 <div class="cart">
-  <h1 class="welcoming-message">Hello <%= user.name %></h1>
-  <div class="cart-collectio">
+  <h1 class="welcoming-message">Welcome to your cart, <%= user.name %></h1>
+    <% let totalPrice = 0 %>
     <% if(products.length > 0) { for(let product of products) { %>
     <div class="cart-product">
       <h1 class="cart-product__title"><%= product.productId.title %></h1>
       <h3 class="cart-product__quantity"><%= product.quantity %></h3>
+      <h3 class="cart-product__price"><%= product.quantity * product.productId.price %></h3>
+      <% totalPrice+= product.quantity * product.productId.price %>
       <form action="/cartDeleteItem" method="POST">
         <input type="hidden" value="<%= product.productId._id %>" name="productId">
-        <button class="cart-product__delete">Delete</button>
+        <button class="cart-product__delete">X</button>
       </form>
     </div>
     <% }} else { %>
     <h1>No products found in your cart.</h1>
     <% } %>
-  </div>
+    <div class="checkout">
+      <h3 class="final-price">Total Price : <%= totalPrice %> €</h3>
+      <button disabled="true" title="This feature is not ready yet.">Order</button>
+    </div>
 </div>
 <%- include('../includes/End.ejs') %>

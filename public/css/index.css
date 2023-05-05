@@ -1,11 +1,18 @@
+@font-face {
+    font-family: Outfit;
+    src: url('../fonts/Outfit-VariableFont_wght.ttf');
+}
+
 * {
     margin : 0;
     padding : 0;
     box-sizing: border-box;
+    font-family: Outfit;
 }
 body {
     width : 100%;
     overflow-x: hidden;
+    background-color: aliceblue;
 }
 .content-container {
     width : 100%;

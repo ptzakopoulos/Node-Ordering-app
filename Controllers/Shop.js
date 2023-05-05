@@ -1,6 +1,7 @@
 const Product = require("../Models/Product");
 const User = require("../Models/User");
 
+let totalProducts = 0
 //The variable role is just for the presentation untill login system will be included
 let role = 'guest'
 
@@ -14,8 +15,7 @@ exports.getShop = (req, res, next) => {
       User.findById("645368d0b74b4aaabb0f41bc")
         .then((user) => {
             const products = req.user.cart.items;
-            let totalProducts = 0
-
+          totalProducts = 0 
             products.forEach(e => {
               totalProducts+= e.quantity
             })
@@ -83,4 +83,15 @@ exports.postDeleteItem = (req,res,next) => {
     res.redirect('/cart')
   })
   .catch(err => console.error(err))
+}
+
+exports.getOrders = (req,res,next) => {
+  res.render('user/orders', {
+    path: "/orders",
+    pageTitle: "Your orders",
+    // products: products,
+    user : req.user,
+    role : role,
+    total : totalProducts
+  })
 }

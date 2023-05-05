@@ -18,7 +18,7 @@ header {
   justify-content: space-between;
   align-items: center;
   background-color: orangered;
-  padding: 50px 200px;
+  padding: 50px 100px;
   position: -webkit-sticky;
   position: sticky;
   top: 0;
@@ -36,7 +36,7 @@ header .nav {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 30px;
+  gap: 10px;
   list-style: none;
 }
 header .nav a, header .nav .temporary-bt {
@@ -46,7 +46,7 @@ header .nav a, header .nav .temporary-bt {
   color: white;
   background-color: transparent;
   border: none;
-  transition: all 0.5s linear;
+  transition: all 0.2s linear;
 }
 header .nav a:hover, header .nav .temporary-bt:hover {
   background-color: white;

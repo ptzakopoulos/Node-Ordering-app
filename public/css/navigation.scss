@@ -22,7 +22,7 @@ header {
     justify-content: space-between;
     align-items: center;
     background-color: orangered;
-    padding : 50px 200px;
+    padding : 50px 100px;
     position: sticky;
     top : 0;
     transition:all 0.4s linear;
@@ -41,7 +41,7 @@ header {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap : 30px;
+        gap : 10px;
         list-style: none;
         
         a, .temporary-bt {
@@ -51,7 +51,7 @@ header {
             color : white;
             background-color: transparent;
             border: none;
-            transition: all 0.5s linear;
+            transition: all 0.2s linear;
 
             &:hover {
                 background-color: white;

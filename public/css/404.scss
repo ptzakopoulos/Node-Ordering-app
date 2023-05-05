@@ -1,0 +1,27 @@
+* {
+    margin : 0;
+    padding : 0;
+    box-sizing: border-box;
+}
+body {
+    width : 100vw;
+    height: 100vh;
+    background-image: url('../images/404.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y : -100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding : 50px;
+    gap : 50px;
+    color : white;
+
+    h1 {
+        font-size: 70px;
+    }
+    p{
+        width : 500px;
+        font-size: 50px;;
+    }
+}

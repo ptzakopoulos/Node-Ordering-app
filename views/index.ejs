@@ -1,5 +1,13 @@
 <%- include('./includes/Head.ejs') %> 
 <script src="/javascript/navBar.js" defer></script>
+<script src="/javascript/addToCartLoader.js" defer></script>
+<div id="loading-screen">
+    <div id="loader1">
+        <div id="loader2">
+            <div id="loader3"></div>
+        </div>
+    </div>
+</div>
 <%-include('./includes/navigation.ejs',{user : user}) %>
 <!-- Checking if the user is admin -->
 <div class="content-container">
