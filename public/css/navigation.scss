@@ -44,11 +44,13 @@ header {
         gap : 30px;
         list-style: none;
         
-        a {
+        a, .temporary-bt {
             font-size: 22px;
             text-decoration: none;
             padding : 10px;
             color : white;
+            background-color: transparent;
+            border: none;
             transition: all 0.5s linear;
 
             &:hover {

@@ -2,10 +2,10 @@
 <script src="/javascript/navBar.js" defer></script>
 <%-include('./includes/navigation.ejs',{user : user}) %>
 <!-- Checking if the user is admin -->
-<% if(user.role === 'admin') { %>
+<div class="content-container">
+<% if(role === 'admin') { %>
 <!-- Script responsible for add Product sections -->
 <script src="/javascript/addProduct.js" defer></script>
-<div class="content-container">
     <div class="add-product__container">
         <button id="add-product__button" class="add-product__button">Add Product</button>
         <div id="add-product__field" class="add-product__field">
@@ -58,7 +58,7 @@
     <div class="right-box">
       <%- include('./includes/add-to-cart.ejs', {product : product}) %>
     </div>
-    <% if(user.role === 'admin') { %>
+    <% if(role === 'admin') { %>
         <div class="admin-pannel">
             <form action="/deleteProduct" method="POST">
                 <input type="hidden" value="<%= product.id %>" name="deletedProdId">

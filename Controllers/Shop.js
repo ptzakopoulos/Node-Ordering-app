@@ -1,6 +1,9 @@
 const Product = require("../Models/Product");
 const User = require("../Models/User");
 
+//The variable role is just for the presentation untill login system will be included
+let role = 'guest'
+
 exports.getShop = (req, res, next) => {
   let productCollection;
   Product.find()
@@ -12,15 +15,17 @@ exports.getShop = (req, res, next) => {
         .then((user) => {
             const products = req.user.cart.items;
             let totalProducts = 0
-            console.log(user.role)
+
             products.forEach(e => {
               totalProducts+= e.quantity
             })
+
           res.render("index", {
             pageTitle: "Shop",
             path: "/shop",
             products: productCollection,
             user: user,
+            role : role, //This will not be included after login system is set
             total : totalProducts
           });
         })
@@ -28,6 +33,13 @@ exports.getShop = (req, res, next) => {
     })
     .catch((err) => console.error(err));
 };
+
+//This Controller is just for the presentation untill Log in system will be included
+exports.postChangeRole = (req,res,next) => {
+  role = req.body.role
+  res.redirect('/')
+}
+
 
 exports.getCart = (req, res, next) => {
     req.user
@@ -45,6 +57,7 @@ exports.getCart = (req, res, next) => {
         pageTitle: "Your cart",
         products: products,
         user : user,
+        role : role,
         total : totalProducts
       });
     })

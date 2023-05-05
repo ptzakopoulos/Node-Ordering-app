@@ -6,6 +6,18 @@
     <li class="nav-item">
       <a href="/">Shop</a>
     </li>
+    <li>
+      <form action="/changeRole" method="POST">
+        <!-- The role will either remain as "role" and get imported or change to user.role once log in system is set -->
+        <% if(role === 'admin') { %>
+          <input type="hidden" value="guest" name="role" >
+          <button class="temporary-bt" type="submit">Log in as guest</button>
+          <% } else { %>
+            <input type="hidden" value="admin" name="role" >
+            <button class="temporary-bt" type="submit">Log in as Admin</button>
+        <% } %>
+      </form>
+    </li>
     <li >
       <a class="cart-preview" href="/cart">
         <span class="text"> Cart </span>

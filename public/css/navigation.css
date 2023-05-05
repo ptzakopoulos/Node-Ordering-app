@@ -39,14 +39,16 @@ header .nav {
   gap: 30px;
   list-style: none;
 }
-header .nav a {
+header .nav a, header .nav .temporary-bt {
   font-size: 22px;
   text-decoration: none;
   padding: 10px;
   color: white;
+  background-color: transparent;
+  border: none;
   transition: all 0.5s linear;
 }
-header .nav a:hover {
+header .nav a:hover, header .nav .temporary-bt:hover {
   background-color: white;
   color: orangered;
 }
