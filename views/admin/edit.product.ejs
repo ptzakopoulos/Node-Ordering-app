@@ -1,0 +1,27 @@
+
+<div class="edit-product__field">
+    <form action="/editProduct" method="POST">
+            <input class="idProvider" type="hidden" value="<%= product.id %>"  name="productId" />
+            <input class="idProvider" type="text" value="<%= product.id %>" disabled="true"  name="id" />
+        <div class="edit-product__section">
+            <label>Product Title</label>
+            <input class="input" type="text" name="title" value="<%= product.title %>" />
+        </div>
+        <div class="edit-product__section">
+            <label>Image URL</label>
+            <input class="input"  type="text" name="imageUrl" value="<%= product.imageUrl %>" />
+        </div>
+        <div class="edit-product__section">
+            <label>Price</label>
+            <input class="input"  type="number" name="price" value="<%= product.price %>" />
+        </div>
+        <div class="edit-product__section">
+            <label>Description</label>
+            <textarea class="input"  type="text" name="description" value="<%= product.description %>"></textarea>
+        </div>
+        <div class="edit-product__buttons">
+            <button type="submit" name="submit">Save</button>
+            <button class="cancel-edit" type="reset" name="reset">Cansel</button>
+        </div>
+    </form>
+</div>
