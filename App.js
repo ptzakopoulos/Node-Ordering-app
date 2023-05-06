@@ -1,3 +1,5 @@
+require("dotenv").config();
+const dataBaseUrl = process.env.DATABASE;
 //App requirements
 const express = require("express");
 const mongoose = require("mongoose");
@@ -43,9 +45,7 @@ app.use(errorController.get404);
 
 //Connecting Mongoose to MongoDB Database | Creating a dummy user if not exists
 mongoose
-  .connect(
-    "mongodb+srv://psnod:panos123@cluster0.dgofkdg.mongodb.net/?retryWrites=true&w=majority"
-  )
+  .connect(dataBaseUrl)
   .then((result) => {
     User.findOne()
       .then((user) => {

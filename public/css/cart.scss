@@ -56,9 +56,18 @@
       border:none;
       font-size: 30px;
       background-color: transparent;
+      transition: all 0.05s linear;
+    
+      &:active {
+        transform: scale(0.7);
+      }
     }
     .cart-product__increase {
       color : green;
+
+      &:active {
+        transform: scale(1.3);
+      }
     }
   }
 

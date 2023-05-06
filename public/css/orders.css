@@ -11,7 +11,7 @@
   font-weight: bold;
 }
 .orders-container #front-wheel, .orders-container #back-wheel {
-  transform-origin: center;
+  transform-origin: 50%;
   transform-box: fill-box;
   -webkit-animation-name: wheels;
           animation-name: wheels;

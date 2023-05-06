@@ -12,7 +12,8 @@
     }
 
     #front-wheel, #back-wheel {
-        transform-origin: center;
+        // transform-origin: center;
+        transform-origin: 50%;
         transform-box: fill-box;
         animation-name : wheels;
         animation-duration: 1s;
