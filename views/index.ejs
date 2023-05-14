@@ -1,87 +1,91 @@
-<%- include('./includes/Head.ejs') %> 
+<%- include('./includes/Head.ejs') %>
 <script src="/javascript/navBar.js" defer></script>
 <script src="/javascript/addToCartLoader.js" defer></script>
 <div id="loading-screen">
-    <div id="loader1">
-        <div id="loader2">
-            <div id="loader3"></div>
-        </div>
+  <div id="loader1">
+    <div id="loader2">
+      <div id="loader3"></div>
     </div>
+  </div>
 </div>
-<%-include('./includes/navigation.ejs',{user : user}) %>
+<%-include('./includes/navigation.ejs') %>
 <!-- Checking if the user is admin -->
 <div class="content-container">
-<% if(role === 'admin') { %>
-<!-- Script responsible for add Product sections -->
-<script src="/javascript/addProduct.js" defer></script>
-    <div class="add-product__container">
-        <button id="add-product__button" class="add-product__button">Add Product</button>
-        <div id="add-product__field" class="add-product__field">
-            <form action="/addProduct" method="POST">
-                <div class="add-product__section">
-                    <label>Product Title</label>
-                    <input class="input" type="text" name="title">
-                </div>
-                <div class="add-product__section">
-                    <label>Image URL</label>
-                    <input class="input"  type="text" name="imageUrl" />
-                </div>
-                <div class="add-product__section">
-                    <label>Price</label>
-                    <input class="input"  type="number" name="price" />
-                </div>
-                <div class="add-product__section">
-                    <label>Type</label>
-                    <select name="type">
-                        <option value="mexican">Mexican</option>
-                        <option value="italian">Italian</option>
-                        <option value="greek">Greek</option>
-                    </select>
-                </div>
-                <div class="add-product__section">
-                    <label>Description</label>
-                    <textarea class="input"  type="text" name="description"></textarea>
-                </div>
-                <div class="add-product__buttons">
-                    <button id="submit" type="submit" name="submit" disabled="true">Add</button>
-                    <button id="cancel" type="reset" name="reset">Cansel</button>
-                </div>
-            </form>
+  <% if(role === 'admin') { %>
+  <!-- Script responsible for add Product sections -->
+  <script src="/javascript/addProduct.js" defer></script>
+  <div class="add-product__container">
+    <button id="add-product__button" class="add-product__button">
+      Add Product
+    </button>
+    <div id="add-product__field" class="add-product__field">
+      <form action="/addProduct" method="POST">
+        <div class="add-product__section">
+          <label>Product Title</label>
+          <input class="input" type="text" name="title" />
         </div>
+        <div class="add-product__section">
+          <label>Image URL</label>
+          <input class="input" type="text" name="imageUrl" />
+        </div>
+        <div class="add-product__section">
+          <label>Price</label>
+          <input class="input" type="number" name="price" />
+        </div>
+        <div class="add-product__section">
+          <label>Type</label>
+          <select name="type">
+            <option value="mexican">Mexican</option>
+            <option value="italian">Italian</option>
+            <option value="greek">Greek</option>
+          </select>
+        </div>
+        <div class="add-product__section">
+          <label>Description</label>
+          <textarea class="input" type="text" name="description"></textarea>
+        </div>
+        <div class="add-product__buttons">
+          <button id="submit" type="submit" name="submit" disabled="true">
+            Add
+          </button>
+          <button id="cancel" type="reset" name="reset">Cansel</button>
+        </div>
+      </form>
     </div>
-<% } %>
-<div class="products-field">
-    <%- include('./user/productFilter.ejs') %>
-  <% if(products.length > 0){ for(let product of products.reverse()) { %>
+  </div>
+  <% } %>
+  <div class="products-field">
+    <%- include('./user/productFilter.ejs') %> <% if(products.length > 0){
+    for(let product of products.reverse()) { %>
 
-  <div class="product-card" productType="all <%= product.type %>">
-    <div class="left-box">
-      <img src="<%= product.imageUrl %>" alt="Image" />
-      <div class="product-info">
-        <h1 class="product-title"><%= product.title %></h1>
-        <p class="product-description"><%= product.description %></p>
-      </div>
-      <h3 class="product-price"><%= product.price %></h3>
-    </div>
-    <div class="right-box">
-      <%- include('./includes/add-to-cart.ejs', {product : product}) %>
-    </div>
-    <% if(role === 'admin') { %>
-        <div class="admin-pannel">
-            <form action="/deleteProduct" method="POST">
-                <input type="hidden" value="<%= product.id %>" name="deletedProdId">
-                <button type="submit">Delete</button>
-            </form>    
-            <button class="edit-product-button" type="submit">Edit</button>
-            <%- include('./admin/edit.product.ejs', {product : product}) %>
+    <div class="product-card" productType="all <%= product.type %>">
+      <div class="left-box">
+        <img src="<%= product.imageUrl %>" alt="Image" />
+        <div class="product-info">
+          <h1 class="product-title"><%= product.title %></h1>
+          <p class="product-description"><%= product.description %></p>
         </div>
+        <h3 class="product-price"><%= product.price %></h3>
+      </div>
+      <div class="right-box">
+        <%- include('./includes/add-to-cart.ejs', {product : product}) %>
+      </div>
+      <% if(role === 'admin') { %>
+      <div class="admin-pannel">
+        <form action="/deleteProduct" method="POST">
+          <input type="hidden" value="<%= product.id %>" name="deletedProdId" />
+          <button type="submit">Delete</button>
+        </form>
+        <button class="edit-product-button" type="submit">Edit</button>
+        <%- include('./admin/edit.product.ejs', {product : product}) %>
+      </div>
+      <% } %>
+    </div>
+
+    <% }} else { %>
+    <h1>No products found</h1>
     <% } %>
   </div>
-
-  <% }} else { %>
-  <h1>No products found</h1>
-  <% } %>
-</div>
 </div>
 <script src="/javascript/editProduct.js" defer></script>
 <%- include('./includes/End.ejs') %>
