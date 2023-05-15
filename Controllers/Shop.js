@@ -27,6 +27,7 @@ exports.getShop = (req, res, next) => {
             user: user,
             role: req.user.role,
             total: totalProducts,
+            isLoggedIn: req.isLoggedIn,
           });
         })
         .catch((err) => console.error(err));
@@ -58,6 +59,7 @@ exports.getCart = (req, res, next) => {
         user: user,
         role: req.user.role,
         total: totalProducts,
+        isLoggedIn: req.isLoggedIn,
       });
     })
     .catch((err) => console.error(err));
@@ -116,6 +118,7 @@ exports.getOrders = (req, res, next) => {
         total: totalProducts,
         orders: user.orders,
         date: user.orderDate,
+        isLoggedIn: req.isLoggedIn,
       });
     })
     .catch((err) => console.error(err));
@@ -135,6 +138,7 @@ exports.getLogin = (req, res, next) => {
   res.render("user/login", {
     pageTitle: "Login",
     total: totalProducts,
+    isLoggedIn: req.isLoggedIn,
   });
 };
 
@@ -146,6 +150,7 @@ exports.getRegister = (req, res, next) => {
   res.render("user/register", {
     pageTitle: "Register",
     total: totalProducts,
+    isLoggedIn: req.isLoggedIn,
   });
 };
 
@@ -191,6 +196,7 @@ exports.getReviews = (req, res, next) => {
             total: totalProducts,
             product: product,
             reviews: reviews,
+            isLoggedIn: req.isLoggedIn,
           });
         })
         .catch((err) => console.error(err));

@@ -7,11 +7,12 @@
     <li class="nav-item">
       <a href="/">Shop</a>
     </li>
+    <% if(isLoggedIn == true){ %>
     <li class="nav-item">
       <a href="/orders">Orders</a>
     </li>
     <li>
-      <a href="login">Login</a>
+      <a href="logout">Logout</a>
     </li>
     <li>
       <a class="cart-preview" href="/cart">
@@ -21,5 +22,10 @@
         </div>
       </a>
     </li>
+    <% } else { %>
+    <li>
+      <a href="login">Login</a>
+    </li>
+    <% } %>
   </ul>
 </header>

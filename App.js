@@ -34,6 +34,7 @@ app.use((req, res, next) => {
   User.findById("645368d0b74b4aaabb0f41bc")
     .then((user) => {
       req.user = user;
+      req.isLoggedIn = false;
       next();
     })
     .catch((err) => console.error(err));

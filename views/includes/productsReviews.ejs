@@ -6,11 +6,13 @@
     <div class="product-info">
       <h1><%= product.title %></h1>
       <p><%= product.description %></p>
-      <%- include('../includes/add-to-cart.ejs', {product : product}) %>
+      <% if(isLoggedIn) { %> <%- include('../includes/add-to-cart.ejs', {product
+      : product}) %> <% } %>
     </div>
   </div>
 
   <div class="reviews">
+    <% if(isLoggedIn) { %>
     <form action="/reviews" method="POST">
       <div class="post-review-field">
         <input type="range" name="score" id="score" min="0" max="5" value="3" />
@@ -26,6 +28,7 @@
         <input type="hidden" name="productId" value="<%= product.id %>" />
       </div>
     </form>
+    <% } %>
 
     <div class="control-container">
       <% if(reviews.length > 0) { reviews.reverse().forEach(review => { %>
