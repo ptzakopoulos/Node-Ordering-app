@@ -30,15 +30,15 @@ const shopRoutes = require("./Routes/Shop");
 const adminRoutes = require("./Routes/Admin");
 
 //Default User
-app.use((req, res, next) => {
-  User.findById("645368d0b74b4aaabb0f41bc")
-    .then((user) => {
-      req.user = user;
-      req.isLoggedIn = false;
-      next();
-    })
-    .catch((err) => console.error(err));
-});
+// app.use((req, res, next) => {
+//   User.findById("645368d0b74b4aaabb0f41bc")
+//     .then((user) => {
+//       req.user = user;
+//       req.isLoggedIn = false;
+//       next();
+//     })
+//     .catch((err) => console.error(err));
+// });
 
 //Listening to routes
 app.use(shopRoutes);
@@ -51,21 +51,21 @@ app.use(errorController.get404);
 mongoose
   .connect(dataBaseUrl)
   .then((result) => {
-    User.findOne()
-      .then((user) => {
-        if (!user) {
-          const user = new User({
-            name: "Panos",
-            email: "panos@panos.panos",
-            role: "admin",
-            cart: {
-              items: [],
-            },
-          });
-          user.save();
-        }
-      })
-      .catch((err) => console.error(err));
+    // User.findOne()
+    //   .then((user) => {
+    //     if (!user) {
+    //       const user = new User({
+    //         name: "Panos",
+    //         email: "panos@panos.panos",
+    //         role: "admin",
+    //         cart: {
+    //           items: [],
+    //         },
+    //       });
+    //       user.save();
+    //     }
+    //   })
+    //   .catch((err) => console.error(err));
     app.listen(3000);
     console.log(`Server is listening to : `.blue, "3000".yellow);
   })

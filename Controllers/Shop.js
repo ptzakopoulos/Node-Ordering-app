@@ -3,34 +3,43 @@ const User = require("../Models/User");
 const Review = require("../Models/Reviews");
 
 let totalProducts = 0;
+let isLoggedIn = false;
+let loggedUser;
 //The variable role is just for the presentation untill login system will be included
 
 exports.getShop = (req, res, next) => {
   let productCollection;
+  console.log(isLoggedIn);
   Product.find()
     .then((products) => {
       productCollection = products;
     })
     .then(() => {
-      User.findById("645368d0b74b4aaabb0f41bc")
-        .then((user) => {
-          const products = req.user.cart.items;
-          totalProducts = 0;
-          products.forEach((e) => {
-            totalProducts += e.quantity;
-          });
+      if (isLoggedIn) {
+        const products = loggedUser.cart.items;
+        totalProducts = 0;
+        products.forEach((e) => {
+          totalProducts += e.quantity;
+        });
 
-          res.render("index", {
-            pageTitle: "Shop",
-            path: "/shop",
-            products: productCollection,
-            user: user,
-            role: req.user.role,
-            total: totalProducts,
-            isLoggedIn: req.isLoggedIn,
-          });
-        })
-        .catch((err) => console.error(err));
+        res.render("index", {
+          pageTitle: "Shop",
+          path: "/shop",
+          products: productCollection,
+          user: loggedUser,
+          role: loggedUser.role,
+          total: totalProducts,
+          isLoggedIn: isLoggedIn,
+        });
+      } else {
+        res.render("index", {
+          pageTitle: "Shop",
+          path: "/shop",
+          role: "guest",
+          products: productCollection,
+          isLoggedIn: isLoggedIn,
+        });
+      }
     })
     .catch((err) => console.error(err));
 };
@@ -42,7 +51,7 @@ exports.getShop = (req, res, next) => {
 // };
 
 exports.getCart = (req, res, next) => {
-  req.user
+  loggedUser
     .populate("cart.items.productId")
     .then((user) => {
       const products = user.cart.items;
@@ -57,9 +66,9 @@ exports.getCart = (req, res, next) => {
         pageTitle: "Your cart",
         products: products,
         user: user,
-        role: req.user.role,
+        role: loggedUser.role,
         total: totalProducts,
-        isLoggedIn: req.isLoggedIn,
+        isLoggedIn: isLoggedIn,
       });
     })
     .catch((err) => console.error(err));
@@ -70,7 +79,7 @@ exports.postCart = (req, res, next) => {
 
   Product.findById(productId)
     .then((product) => {
-      return req.user.addToCart(product);
+      return loggedUser.addToCart(product);
     })
     .then(() => {
       res.redirect("/");
@@ -80,7 +89,7 @@ exports.postCart = (req, res, next) => {
 exports.postRemoveOne = (req, res, next) => {
   const productId = req.body.productId;
 
-  req.user
+  loggedUser
     .removeOneFromCart(productId)
     .then(() => {
       res.redirect("/cart");
@@ -91,7 +100,7 @@ exports.postRemoveOne = (req, res, next) => {
 exports.postAddOne = (req, res, next) => {
   const productId = req.body.productId;
 
-  req.user
+  loggedUser
     .addOneToCart(productId)
     .then(() => {
       res.redirect("/cart");
@@ -101,7 +110,7 @@ exports.postAddOne = (req, res, next) => {
 
 exports.postDeleteItem = (req, res, next) => {
   const productId = req.body.productId;
-  req.user
+  loggedUser
     .removeFromCart([productId])
     .then(() => {
       res.redirect("/cart");
@@ -110,7 +119,7 @@ exports.postDeleteItem = (req, res, next) => {
 };
 
 exports.getOrders = (req, res, next) => {
-  req.user
+  loggedUser
     .populate("orders.productId")
     .then((user) => {
       res.render("user/orders", {
@@ -118,14 +127,14 @@ exports.getOrders = (req, res, next) => {
         total: totalProducts,
         orders: user.orders,
         date: user.orderDate,
-        isLoggedIn: req.isLoggedIn,
+        isLoggedIn: isLoggedIn,
       });
     })
     .catch((err) => console.error(err));
 };
 
 exports.postOrders = (req, res, next) => {
-  req.user
+  loggedUser
     .sendOrder()
     .then(() => {
       totalProducts = 0;
@@ -138,19 +147,34 @@ exports.getLogin = (req, res, next) => {
   res.render("user/login", {
     pageTitle: "Login",
     total: totalProducts,
-    isLoggedIn: req.isLoggedIn,
+    isLoggedIn: isLoggedIn,
   });
 };
 
 exports.postLogin = (req, res, next) => {
-  res.redirect("/");
+  const email = req.body.email;
+  const password = req.body.password;
+
+  User.findOne({ email: email })
+    .then((user) => {
+      if (user && user.password === password) {
+        loggedUser = user;
+        isLoggedIn = true;
+      } else {
+        res.redirect("/login");
+      }
+    })
+    .then(() => {
+      res.redirect("/");
+    })
+    .catch((err) => console.error(err));
 };
 
 exports.getRegister = (req, res, next) => {
   res.render("user/register", {
     pageTitle: "Register",
     total: totalProducts,
-    isLoggedIn: req.isLoggedIn,
+    isLoggedIn: isLoggedIn,
   });
 };
 
@@ -196,7 +220,7 @@ exports.getReviews = (req, res, next) => {
             total: totalProducts,
             product: product,
             reviews: reviews,
-            isLoggedIn: req.isLoggedIn,
+            isLoggedIn: isLoggedIn,
           });
         })
         .catch((err) => console.error(err));
@@ -208,7 +232,7 @@ exports.postReview = (req, res, next) => {
   // const productId = req.body.productId;
   const reviewInfo = {
     productId: req.body.productId,
-    userId: req.user.id,
+    userId: loggedUser.id,
     title: req.body.title.trim(),
     content: req.body.content.trim(),
     score: req.body.score,
