@@ -12,7 +12,7 @@
   </div>
 
   <div class="reviews">
-    <% if(isLoggedIn) { %>
+    <% if(isLoggedIn && !hasPosted && hasOrdered) { %>
     <form action="/reviews" method="POST">
       <div class="post-review-field">
         <input type="range" name="score" id="score" min="0" max="5" value="3" />
@@ -28,6 +28,13 @@
         <input type="hidden" name="productId" value="<%= product.id %>" />
       </div>
     </form>
+    <% } else { %>
+    <h2>In order to leave review you should</h2>
+    <ol>
+      <li>Be logged in</li>
+      <li>Have ordered the dish atleast once</li>
+      <li>Haven't posted a review to this dish before.</li>
+    </ol>
     <% } %>
 
     <div class="control-container">

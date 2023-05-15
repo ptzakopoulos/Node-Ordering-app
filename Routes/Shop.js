@@ -11,6 +11,8 @@ router.get("/login", controllers.getLogin);
 
 router.post("/login", controllers.postLogin);
 
+router.get("/logout", controllers.logout);
+
 router.get("/register", controllers.getRegister);
 
 router.post("/register", controllers.postRegister);
