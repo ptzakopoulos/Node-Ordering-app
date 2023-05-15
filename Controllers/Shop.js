@@ -150,7 +150,31 @@ exports.getRegister = (req, res, next) => {
 };
 
 exports.postRegister = (req, res, next) => {
-  res.redirect("/");
+  const member = "member";
+  const email = req.body.email;
+
+  User.findOne({ email: email })
+    .then((user) => {
+      console.log(user);
+      if (user) {
+        return res.redirect("/register");
+      }
+
+      const newUser = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        role: member,
+      });
+
+      newUser
+        .save()
+        .then(() => {
+          res.redirect("/login");
+        })
+        .catch((err) => console.error(err));
+    })
+    .catch((err) => console.error(err));
 };
 
 //Product Reviews - Details
