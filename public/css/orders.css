@@ -1,170 +1,50 @@
+@charset "UTF-8";
 .orders-container {
   width: 100%;
-  padding: 50px;
+  padding: 100px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   gap: 50px;
 }
-.orders-container h2 {
-  font-size: 30px;
-  font-weight: bold;
+.orders-container .order-card {
+  width: 90%;
+  background-color: rgba(0, 0, 0, 0.9);
+  box-shadow: 10px 10px 25px 5px rgba(0, 0, 0, 0.8);
+  border-radius: 25px;
+  padding: 20px;
+  color: white;
 }
-.orders-container #front-wheel, .orders-container #back-wheel {
-  transform-origin: 50%;
-  transform-box: fill-box;
-  -webkit-animation-name: wheels;
-          animation-name: wheels;
-  -webkit-animation-duration: 1s;
-          animation-duration: 1s;
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-  -webkit-animation-timing-function: linear;
-          animation-timing-function: linear;
+.orders-container .order-card .total-price {
+  margin-top: 20px;
+  margin-bottom: 50px;
+  border-bottom: 2px solid chocolate;
 }
-@-webkit-keyframes wheels {
-  from {
-    transform: rotateZ(0turn);
-  }
-  to {
-    transform: rotateZ(1turn);
-  }
+.orders-container .order-card .total-price::after {
+  content: " €";
 }
-@keyframes wheels {
-  from {
-    transform: rotateZ(0turn);
-  }
-  to {
-    transform: rotateZ(1turn);
-  }
+.orders-container .order-card .date {
+  border: 2px solid white;
+  background-color: rgba(255, 68, 0, 0.5);
+  border-radius: 10px;
+  padding: 5px;
 }
-.orders-container #man, .orders-container #bike {
-  transform-origin: center;
-  transform-box: fill-box;
-  -webkit-animation-name: bike;
-          animation-name: bike;
-  -webkit-animation-duration: 2s;
-          animation-duration: 2s;
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-  -webkit-animation-timing-function: linear;
-          animation-timing-function: linear;
+.orders-container .order-card p {
+  font-size: 18px;
 }
-@-webkit-keyframes bike {
-  0% {
-    transform: translateY(0);
-  }
-  5% {
-    transform: translateY(-1px);
-  }
-  10% {
-    transform: translateY(0);
-  }
-  15% {
-    transform: translateY(-1px);
-  }
-  20% {
-    transform: translateY(0);
-  }
-  25% {
-    transform: translateY(-1px);
-  }
-  30% {
-    transform: translateY(0);
-  }
-  35% {
-    transform: translateY(-1px);
-  }
-  40% {
-    transform: translateY(0);
-  }
-  45% {
-    transform: translateY(-1px);
-  }
-  50% {
-    transform: translateY(0);
-  }
-  60% {
-    transform: translateY(5px);
-  }
-  70% {
-    transform: translateY(0);
-  }
-  75% {
-    transform: translateY(-1px);
-  }
-  80% {
-    transform: translateY(0);
-  }
-  85% {
-    transform: translateY(-1px);
-  }
-  90% {
-    transform: translateY(0);
-  }
-  95% {
-    transform: translateY(-1px);
-  }
-  100% {
-    transform: translateY(0);
-  }
+.orders-container .order-card .order-info {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 20px;
 }
-@keyframes bike {
-  0% {
-    transform: translateY(0);
-  }
-  5% {
-    transform: translateY(-1px);
-  }
-  10% {
-    transform: translateY(0);
-  }
-  15% {
-    transform: translateY(-1px);
-  }
-  20% {
-    transform: translateY(0);
-  }
-  25% {
-    transform: translateY(-1px);
-  }
-  30% {
-    transform: translateY(0);
-  }
-  35% {
-    transform: translateY(-1px);
-  }
-  40% {
-    transform: translateY(0);
-  }
-  45% {
-    transform: translateY(-1px);
-  }
-  50% {
-    transform: translateY(0);
-  }
-  60% {
-    transform: translateY(5px);
-  }
-  70% {
-    transform: translateY(0);
-  }
-  75% {
-    transform: translateY(-1px);
-  }
-  80% {
-    transform: translateY(0);
-  }
-  85% {
-    transform: translateY(-1px);
-  }
-  90% {
-    transform: translateY(0);
-  }
-  95% {
-    transform: translateY(-1px);
-  }
-  100% {
-    transform: translateY(0);
-  }
+.orders-container .order-card .order-info h1 {
+  font-size: 22px;
+}
+.orders-container .overal-price {
+  font-size: 22px;
+}
+.orders-container .overal-price::after {
+  content: " €";
 }/*# sourceMappingURL=orders.css.map */

@@ -2,34 +2,54 @@
 %>
 <div class="cart">
   <h1 class="welcoming-message">Welcome to your cart, <%= user.name %></h1>
-    <% let totalPrice = 0 %>
-    <% if(products.length > 0) { for(let product of products) { %>
-    <div class="cart-product">
-      <h1 class="cart-product__title"><%= product.productId.title %></h1>
-      <h3 class="cart-product__quantity"><%= product.quantity %></h3>
-      <h3 class="cart-product__price"><%= product.quantity * product.productId.price %></h3>
-      <% totalPrice+= product.quantity * product.productId.price %>
-      <div class="buttons">
-        <form action="/cartRemoveOne" method="POST">
-          <input type="hidden" value="<%= product.productId._id %>" name="productId">
-          <button class="cart-product__decrease">-</button>
-        </form>
-        <form action="/cartDeleteItem" method="POST">
-          <input type="hidden" value="<%= product.productId._id %>" name="productId">
-          <button class="cart-product__delete">X</button>
-        </form>
-        <form action="/cartAddOne" method="POST">
-          <input type="hidden" value="<%= product.productId._id %>" name="productId">
-          <button class="cart-product__increase">+</button>
-        </form>
-      </div>
+  <% let totalPrice = 0 %> <% if(products.length > 0) { for(let product of
+  products) { %>
+  <div class="cart-product">
+    <h1 class="cart-product__title"><%= product.productId.title %></h1>
+    <h3 class="cart-product__quantity"><%= product.quantity %></h3>
+    <h3 class="cart-product__price">
+      <%= product.quantity * product.productId.price %>
+    </h3>
+    <% totalPrice+= product.quantity * product.productId.price %>
+    <div class="buttons">
+      <form action="/cartRemoveOne" method="POST">
+        <input
+          type="hidden"
+          value="<%= product.productId._id %>"
+          name="productId"
+        />
+        <button class="cart-product__decrease">-</button>
+      </form>
+      <form action="/cartDeleteItem" method="POST">
+        <input
+          type="hidden"
+          value="<%= product.productId._id %>"
+          name="productId"
+        />
+        <button class="cart-product__delete">X</button>
+      </form>
+      <form action="/cartAddOne" method="POST">
+        <input
+          type="hidden"
+          value="<%= product.productId._id %>"
+          name="productId"
+        />
+        <button class="cart-product__increase">+</button>
+      </form>
     </div>
-    <% }} else { %>
-    <h1>No products found in your cart.</h1>
+  </div>
+  <% }} else { %>
+  <h1>No products found in your cart.</h1>
+  <% } %>
+  <div class="checkout">
+    <% if(products.length > 0 ) { %>
+    <h3 class="final-price">Total Price : <%= totalPrice %> €</h3>
+    <form action="/orders" method="POST">
+      <button type="submit" name="totalPrice" value="<%= totalPrice %>">
+        Order
+      </button>
+    </form>
     <% } %>
-    <div class="checkout">
-      <h3 class="final-price">Total Price : <%= totalPrice %> €</h3>
-      <button disabled="true" title="This feature is curently unavailable">Order</button>
-    </div>
+  </div>
 </div>
 <%- include('../includes/End.ejs') %>

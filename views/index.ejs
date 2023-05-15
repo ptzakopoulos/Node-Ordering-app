@@ -60,7 +60,9 @@
 
     <div class="product-card" productType="all <%= product.type %>">
       <div class="left-box">
-        <img src="<%= product.imageUrl %>" alt="Image" />
+        <a href="/reviews<%=product.id%>" name="prodId" value="product.id">
+          <img src="<%= product.imageUrl %>" alt="Image" />
+        </a>
         <div class="product-info">
           <h1 class="product-title"><%= product.title %></h1>
           <p class="product-description"><%= product.description %></p>
@@ -81,11 +83,11 @@
       </div>
       <% } %>
     </div>
-
     <% }} else { %>
-    <h1>No products found</h1>
-    <% } %>
+      <h1>No products found</h1>
+      <% } %>
+    </div>
   </div>
+  <script src="/javascript/editProduct.js" defer></script>
+  <%- include('./includes/End.ejs') %>
 </div>
-<script src="/javascript/editProduct.js" defer></script>
-<%- include('./includes/End.ejs') %>

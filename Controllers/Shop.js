@@ -1,9 +1,9 @@
 const Product = require("../Models/Product");
 const User = require("../Models/User");
+const Review = require("../Models/Reviews");
 
 let totalProducts = 0;
 //The variable role is just for the presentation untill login system will be included
-let role = "guest";
 
 exports.getShop = (req, res, next) => {
   let productCollection;
@@ -25,7 +25,7 @@ exports.getShop = (req, res, next) => {
             path: "/shop",
             products: productCollection,
             user: user,
-            role: role, //This will not be included after login system is set
+            role: req.user.role,
             total: totalProducts,
           });
         })
@@ -35,10 +35,10 @@ exports.getShop = (req, res, next) => {
 };
 
 //This Controller is just for the presentation untill Log in system will be included
-exports.postChangeRole = (req, res, next) => {
-  role = req.body.role;
-  res.redirect("/");
-};
+// exports.postChangeRole = (req, res, next) => {
+//   role = req.body.role;
+//   res.redirect("/");
+// };
 
 exports.getCart = (req, res, next) => {
   req.user
@@ -56,7 +56,7 @@ exports.getCart = (req, res, next) => {
         pageTitle: "Your cart",
         products: products,
         user: user,
-        role: role,
+        role: req.user.role,
         total: totalProducts,
       });
     })
@@ -108,14 +108,27 @@ exports.postDeleteItem = (req, res, next) => {
 };
 
 exports.getOrders = (req, res, next) => {
-  res.render("user/orders", {
-    path: "/orders",
-    pageTitle: "Your orders",
-    // products: products,
-    user: req.user,
-    role: role,
-    total: totalProducts,
-  });
+  req.user
+    .populate("orders.productId")
+    .then((user) => {
+      res.render("user/orders", {
+        pageTitle: "Your Orders",
+        total: totalProducts,
+        orders: user.orders,
+        date: user.orderDate,
+      });
+    })
+    .catch((err) => console.error(err));
+};
+
+exports.postOrders = (req, res, next) => {
+  req.user
+    .sendOrder()
+    .then(() => {
+      totalProducts = 0;
+      res.redirect("/orders");
+    })
+    .catch((err) => console.error(err));
 };
 
 exports.getLogin = (req, res, next) => {
@@ -138,4 +151,51 @@ exports.getRegister = (req, res, next) => {
 
 exports.postRegister = (req, res, next) => {
   res.redirect("/");
+};
+
+//Product Reviews - Details
+exports.getReviews = (req, res, next) => {
+  const productId = req.params.prodId;
+
+  Product.findById(productId)
+    .then((product) => {
+      Review.find({ productId: productId })
+        .populate("userId")
+        .then((reviews) => {
+          res.render("includes/productsReviews", {
+            pageTitle: "Reviews",
+            total: totalProducts,
+            product: product,
+            reviews: reviews,
+          });
+        })
+        .catch((err) => console.error(err));
+    })
+    .catch((err) => console.error(err));
+};
+
+exports.postReview = (req, res, next) => {
+  // const productId = req.body.productId;
+  const reviewInfo = {
+    productId: req.body.productId,
+    userId: req.user.id,
+    title: req.body.title.trim(),
+    content: req.body.content.trim(),
+    score: req.body.score,
+  };
+
+  const review = new Review({
+    title: reviewInfo.title,
+    content: reviewInfo.content,
+    score: reviewInfo.score,
+    productId: reviewInfo.productId,
+    userId: reviewInfo.userId,
+  });
+
+  review
+    .save()
+    .then(() => {
+      res.redirect(`/reviews${reviewInfo.productId}`);
+    })
+    .catch((err) => console.error(err));
 };

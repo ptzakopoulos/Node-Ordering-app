@@ -1,0 +1,50 @@
+<%- include('./Head.ejs') %> <%- include('./navigation.ejs') %>
+<script src="/javascript/postReview.js" defer></script>
+<div class="reviews-container">
+  <div class="product">
+    <img src="<%= product.imageUrl %>" alt="Image" />
+    <div class="product-info">
+      <h1><%= product.title %></h1>
+      <p><%= product.description %></p>
+      <%- include('../includes/add-to-cart.ejs', {product : product}) %>
+    </div>
+  </div>
+
+  <div class="reviews">
+    <form action="/reviews" method="POST">
+      <div class="post-review-field">
+        <input type="range" name="score" id="score" min="0" max="5" value="3" />
+        <input type="text" name="title" id="title" placeholder="Review Title" />
+        <textarea
+          name="content"
+          id="content"
+          cols="30"
+          rows="10"
+          placeholder="Write your review..."
+        ></textarea>
+        <button type="submit" id="submit">Post Review</button>
+        <input type="hidden" name="productId" value="<%= product.id %>" />
+      </div>
+    </form>
+
+    <div class="control-container">
+      <% if(reviews.length > 0) { reviews.reverse().forEach(review => { %>
+      <div class="review">
+        <h4><%= review.userId.name %></h4>
+        <div class="score">
+          <h4><%= review.title %></h4>
+          <div class="stars">
+            <% for(let i = 0; i < review.score; i++){ %>
+            <img src="images/star.png" alt="Star" />
+            <% } %>
+          </div>
+        </div>
+        <p><%= review.content %></p>
+      </div>
+      <% }) } else { %>
+      <h1>There are no reviews for this dish.</h1>
+      <% } %>
+    </div>
+  </div>
+</div>
+<%- include('./End.ejs') %>

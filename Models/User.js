@@ -30,6 +30,31 @@ const userSchema = new Schema({
       },
     ],
   },
+  orders: [
+    [
+      {
+        productId: {
+          type: Schema.Types.ObjectId,
+          ref: "Product",
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+        },
+        date: {
+          type: Object,
+          required: true,
+        },
+      },
+    ],
+  ],
+  orderDate: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
 });
 
 userSchema.methods.addToCart = function (product) {
@@ -110,8 +135,15 @@ userSchema.methods.clearCart = function () {
   return this.save();
 };
 
-userSchema.methods.test = () => {
-  console.log("Tested");
+userSchema.methods.sendOrder = function () {
+  const date = new Date().toLocaleString();
+
+  const newOrder = [...this.cart.items];
+
+  this.orders.push(newOrder);
+  this.orderDate.push(date);
+  this.cart.items = [];
+  return this.save();
 };
 
 module.exports = mongoose.model("User", userSchema);

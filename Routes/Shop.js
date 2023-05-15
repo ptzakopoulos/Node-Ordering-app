@@ -5,7 +5,7 @@ const controllers = require("../Controllers/Shop");
 
 router.get("/", controllers.getShop);
 
-router.post("/changeRole", controllers.postChangeRole);
+// router.post("/changeRole", controllers.postChangeRole);
 
 router.get("/login", controllers.getLogin);
 
@@ -26,5 +26,11 @@ router.post("/cartRemoveOne", controllers.postRemoveOne);
 router.post("/cartAddOne", controllers.postAddOne);
 
 router.get("/orders", controllers.getOrders);
+
+router.post("/orders", controllers.postOrders);
+
+router.get("/reviews:prodId", controllers.getReviews);
+
+router.post("/reviews", controllers.postReview);
 
 module.exports = router;
