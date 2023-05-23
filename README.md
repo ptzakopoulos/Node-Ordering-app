@@ -2,7 +2,7 @@
 Food Delivery App with Node Js
 
 ## Tasks to be done
-[] Password encryption
-[] Email provider
-[] Temporary cart
-[] IDs | _IDs check
+- [ ] Password encryption
+- [ ] Email provider
+- [ ] Temporary cart
+- [ ] IDs | _IDs check
