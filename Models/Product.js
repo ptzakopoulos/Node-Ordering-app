@@ -19,14 +19,19 @@ const productSchema = new Schema({
     type: String,
     required: true,
   },
-  type :{
-    type : String,
-    required : true
+  type: {
+    type: String,
+    required: true,
   },
   userId: {
     type: Schema.Types.ObjectId,
     ref: "User",
     required: true,
+  },
+  reviews: {
+    type: Schema.Types.ObjectId,
+    ref: "Review",
+    required: false,
   },
 });
 

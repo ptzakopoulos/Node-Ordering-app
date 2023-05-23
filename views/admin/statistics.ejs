@@ -1,0 +1,72 @@
+<%- include('../includes/Head.ejs') %> <%- include('../includes/navigation.ejs')
+%>
+<script src="/javascript/statistics.js" defer></script>
+<div class="statistics">
+
+<h1>Statistics</h1>
+
+<% const quantities = [] %>
+<% const names = [] %>
+<% props.forEach(prop => { 
+    names.push(prop) 
+    quantities.push(products[prop].quantity) 
+ }) %> 
+
+<% 
+const sortedQuantities = []
+const sortedNames = []
+const count = props.length
+for(let i = 0; i < count; i++) {
+    const min = Math.min(...quantities)
+    sortedQuantities.push(min)
+    const index = quantities.findIndex(e => {
+        return e === min
+    })
+    sortedNames.push(names[index])
+    quantities.splice(index,1)
+    names.splice(index,1)
+}
+%>
+
+<select id="category">
+    <option value="sales">Sales</option>
+    <option value="users">Users</option>
+    <option value="orders">Orders</option>
+</select>
+
+<div class="sales" id="sales">
+    <h1>Product Sales</h1>
+    <% for(let i = sortedQuantities.length - 1 ; i >= 0;i--) { %>
+        <div class="product">
+            <h1><%= sortedNames[i] %></h1>
+            <h4>x<%= sortedQuantities[i] %></h4>
+        </div>
+    <% } %>
+</div>
+
+<div class="users" id="users">
+    <h1>Registered Users</h1>
+    <% users.forEach(user => { %>
+        <h5><%= user.name %></h5>
+    <% }) %>
+    <h4>Total users : <%= users.length %></h4>
+</div>
+
+<div class="orders" id="orders">
+    <h1>Orders</h1>
+    <% orders.forEach(order => { %>
+        <div class="order">
+        <% order.forEach(product => { %>
+        <div class="product">
+            <h4><%= product.quantity %>x</h4>
+            <h3><%= product.productId.title %></h3>
+        </div>
+        <% }) %>
+    </div>
+    <% }) %>
+    <h4>Total Orders : <%= orders.length %></h4>
+</div>
+<!-- End of orders container -->
+</div>
+<!-- End of statistics -->
+<%- include('../includes/End.ejs') %>

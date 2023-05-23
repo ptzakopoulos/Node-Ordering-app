@@ -9,9 +9,6 @@ const path = require("path");
 
 const app = express();
 
-//Importing Schemas / Models
-const User = require("./Models/User");
-
 //Setting up Template engine
 app.set("view engine", "ejs");
 app.set("views", "views");
@@ -45,3 +42,6 @@ mongoose
     console.log(`Server is listening to : `.blue, "3000".yellow);
   })
   .catch((err) => console.log(err));
+
+
+  

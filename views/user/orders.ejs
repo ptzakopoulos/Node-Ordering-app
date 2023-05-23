@@ -3,11 +3,9 @@ include('../includes/navigation.ejs')%> <% let totalPrice = 0 %> <% let
 overalPrice = 0 %>
 <div class="orders-container">
   <div class="order-card">
-    <% if(orders.length > 0) { %> 
-      <% orders.forEach((order,index) => { %> 
-        <p class="date">Date : <%= date[index] %></p>
-        <% totalPrice = 0 %>
-         <% order.forEach(cart => { %>
+    <% if(orders.length > 0) { %> <% orders.forEach((order,index) => { %>
+    <p class="date">Date : <%= date[index] %></p>
+    <% totalPrice = 0 %> <% order.forEach(cart => { %>
     <div class="order-info">
       <h1><%= cart.productId.title %></h1>
       <h4>x<%= cart.quantity %></h4>

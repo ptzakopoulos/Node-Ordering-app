@@ -1,6 +1,13 @@
 const Product = require("../Models/Product");
 const User = require("../Models/User");
 const Review = require("../Models/Reviews");
+require("dotenv").config();
+const emailDOmain = process.env.EMAIL_DOMAIN;
+const emainApiKey = process.env.EMAIL_API_KEY;
+const mailgun = require("mailgun-js")({
+  apiKey: emainApiKey,
+  domain: emailDOmain,
+});
 
 let totalProducts = 0;
 let isLoggedIn = false;
@@ -10,8 +17,10 @@ let loggedUser;
 exports.getShop = (req, res, next) => {
   let productCollection;
   Product.find()
+    .populate("reviews")
     .then((products) => {
       productCollection = products;
+      //Na to oloklirwsw | Na fainontai ta reviews sto home / shop
     })
     .then(() => {
       if (req.isLoggedIn) {
@@ -127,6 +136,7 @@ exports.getOrders = (req, res, next) => {
         orders: user.orders,
         date: user.orderDate,
         isLoggedIn: req.isLoggedIn,
+        role: req.user.role,
       });
     })
     .catch((err) => console.error(err));
@@ -147,6 +157,7 @@ exports.getLogin = (req, res, next) => {
     pageTitle: "Login",
     total: totalProducts,
     isLoggedIn: req.isLoggedIn,
+    role: "guest",
   });
 };
 
@@ -180,6 +191,7 @@ exports.getRegister = (req, res, next) => {
     pageTitle: "Register",
     total: totalProducts,
     isLoggedIn: req.isLoggedIn,
+    role: "guest",
   });
 };
 
@@ -196,8 +208,20 @@ exports.postRegister = (req, res, next) => {
       const newUser = new User({
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password,
+        password: req.body.password, //This should be encrypted
         role: member,
+      });
+
+      const emailData = {
+        from: "Food Delivery App <tzakopoulosp@gmail.com>",
+        to: email,
+        subject: "Verification Code",
+        html: '<h1> Hello </h1> <a href="http://localhost:3000/">This is the verification code </a>',
+      };
+
+      //Email provider package should be changed.
+      mailgun.messages().send(emailData, function (error, body) {
+        console.log(body);
       });
 
       newUser
@@ -236,21 +260,29 @@ exports.getReviews = (req, res, next) => {
                 });
               })
               .then(() => {
-                res.render("includes/productsReviews", {
-                  pageTitle: "Reviews",
-                  total: totalProducts,
-                  product: product,
-                  reviews: reviews,
-                  isLoggedIn: req.isLoggedIn,
-                  hasPosted: hasPosted,
-                  hasOrdered: hasOrdered,
-                });
-              });
+                Render(totalProducts, product, reviews, hasPosted, hasOrdered);
+              })
+              .catch((err) => console.error(err));
+          } else {
+            Render(totalProducts, product, reviews);
           }
         })
         .catch((err) => console.error(err));
     })
     .catch((err) => console.error(err));
+
+  const Render = (totalProducts, product, reviews, hasPosted, hasOrdered) => {
+    res.render("includes/productsReviews", {
+      pageTitle: "Reviews",
+      total: totalProducts,
+      product: product,
+      reviews: reviews,
+      isLoggedIn: req.isLoggedIn,
+      hasPosted: hasPosted,
+      hasOrdered: hasOrdered,
+      role: req.isLoggedIn ? req.user.role : "guest",
+    });
+  };
 };
 
 exports.postReview = (req, res, next) => {
@@ -282,5 +314,6 @@ exports.postReview = (req, res, next) => {
 exports.validation = (req, res, next) => {
   req.user = loggedUser;
   req.isLoggedIn = isLoggedIn;
+  req.totalProducts = totalProducts;
   next();
 };

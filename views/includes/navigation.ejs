@@ -7,6 +7,11 @@
     <li class="nav-item">
       <a href="/">Shop</a>
     </li>
+    <% if(role === 'admin') { %>
+      <li class="nav-item">
+        <a href="/statistics">Statistics</a>
+      </li>
+    <% } %>
     <% if(isLoggedIn == true){ %>
     <li class="nav-item">
       <a href="/orders">Orders</a>

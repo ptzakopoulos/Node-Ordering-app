@@ -50,6 +50,10 @@
 }
 .products-field .product-card img {
   width: 200px;
+  transition: all 0.3s linear;
+}
+.products-field .product-card img:hover {
+  transform: scale(1.1);
 }
 .products-field .product-price {
   width: 80px;
