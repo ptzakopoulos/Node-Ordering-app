@@ -6,3 +6,5 @@ Food Delivery App with Node Js
 - [ ] Email provider
 - [ ] Temporary cart
 - [ ] IDs | _IDs check
+
+- ( ) 1
