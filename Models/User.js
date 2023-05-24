@@ -38,9 +38,13 @@ const userSchema = new Schema({
   orders: [
     [
       {
+        // productId: {
+        //   type: Schema.Types.ObjectId,
+        //   ref: "Product",
+        //   required: true,
+        // },
         productId: {
-          type: Schema.Types.ObjectId,
-          ref: "Product",
+          type: Object,
           required: true,
         },
         quantity: {
