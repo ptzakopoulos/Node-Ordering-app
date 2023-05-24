@@ -6,5 +6,6 @@ Food Delivery App with Node Js
 - [ ] Password encryption
 - [ ] Email provider
 - [ ] Temporary cart
+- [ ] User Password Reset - Feature
 - [ ] IDs | _IDs check
 
