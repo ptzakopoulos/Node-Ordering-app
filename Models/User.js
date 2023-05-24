@@ -18,7 +18,7 @@ const userSchema = new Schema({
   role: {
     type: String,
     required: true,
-    default : 'member'
+    default: "member",
   },
   cart: {
     items: [
@@ -149,6 +149,11 @@ userSchema.methods.sendOrder = function () {
   this.orderDate.push(date);
   this.cart.items = [];
   return this.save();
+};
+
+userSchema.methods.removedItem = function (index) {
+  this.cart.items.splice(index, 1);
+  this.save();
 };
 
 module.exports = mongoose.model("User", userSchema);

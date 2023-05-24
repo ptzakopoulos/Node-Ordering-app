@@ -9,6 +9,8 @@ const mailgun = require("mailgun-js")({
   domain: emailDOmain,
 });
 
+const crypto = require("crypto");
+
 let totalProducts = 0;
 let isLoggedIn = false;
 let loggedUser;
@@ -62,8 +64,20 @@ exports.getCart = (req, res, next) => {
   req.user
     .populate("cart.items.productId")
     .then((user) => {
+      // const products = [...user.cart.items];
       const products = user.cart.items;
       totalProducts = 0;
+      //Checking if any of the cart's products has been removed from the list
+      const index = products.findIndex((product) => {
+        return product.productId === null;
+      });
+
+      if (index >= 0) {
+        //Updating products before sending them to Ejs
+        products.splice(index, 1);
+        //Updating User's Cart in Database
+        user.removedItem(index);
+      }
 
       products.forEach((e) => {
         totalProducts += e.quantity;
@@ -127,6 +141,7 @@ exports.postDeleteItem = (req, res, next) => {
 };
 
 exports.getOrders = (req, res, next) => {
+  console.log(req.params.token);
   req.user
     .populate("orders.productId")
     .then((user) => {
@@ -171,10 +186,8 @@ exports.postLogin = (req, res, next) => {
         loggedUser = user;
         isLoggedIn = true;
       } else {
-        res.redirect("/login");
+        return res.redirect("/login");
       }
-    })
-    .then(() => {
       res.redirect("/");
     })
     .catch((err) => console.error(err));
@@ -253,6 +266,8 @@ exports.getReviews = (req, res, next) => {
             req.user
               .populate("orders.productId")
               .then(() => {
+                console.log(req.user.id);
+                console.log(req.user._id);
                 hasOrdered = req.user.orders.some((order) => {
                   return order.some((product) => {
                     return product.productId.id === productId;
