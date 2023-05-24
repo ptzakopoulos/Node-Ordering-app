@@ -8,5 +8,5 @@ Food Delivery App with Node Js
 - [ ] Temporary cart
 - [ ] User Password Reset - Feature
 - [ ] IDs | _IDs check
-_Schemas Models Correction_
+*Schemas Models Correction*
 
