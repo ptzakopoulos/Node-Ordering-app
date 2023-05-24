@@ -7,6 +7,5 @@ Food Delivery App with Node Js
 - [x] Email provider
 - [ ] Temporary cart
 - [ ] User Password Reset - Feature
-- [ ] IDs | _IDs check
 - [ ] Adjust Scemas refs and objects  
 
