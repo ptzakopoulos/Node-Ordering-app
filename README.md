@@ -8,4 +8,4 @@ Food Delivery App with Node Js
 - [ ] Temporary cart
 - [ ] User Password Reset - Feature
 - [x] Adjust Scemas refs and objects  
-
+- [ ] Session Management
