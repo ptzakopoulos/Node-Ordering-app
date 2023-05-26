@@ -42,6 +42,3 @@ mongoose
     console.log(`Server is listening to : `.blue, "3000".yellow);
   })
   .catch((err) => console.log(err));
-
-
-  

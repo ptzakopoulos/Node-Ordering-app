@@ -51,10 +51,10 @@ const userSchema = new Schema({
           type: Number,
           required: true,
         },
-        date: {
-          type: Object,
-          required: true,
-        },
+        // date: {
+        //   type: Object,
+        //   required: true,
+        // },
       },
     ],
   ],
@@ -148,6 +148,10 @@ userSchema.methods.sendOrder = function () {
   const date = new Date().toLocaleString();
 
   const newOrder = [...this.cart.items];
+
+  // const newOrder =this.cart.items.map((item) => {
+  //   return { quantity: item.quantity, productId: { ...item.productId._doc } };
+  // });
 
   this.orders.push(newOrder);
   this.orderDate.push(date);

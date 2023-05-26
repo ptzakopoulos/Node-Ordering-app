@@ -57,11 +57,11 @@ exports.postEditProduct = (req, res, next) => {
 exports.getStatistics = (req, res, next) => {
   const displayedProduct = {};
   const productNames = [];
-  let registeredUsers
-  let totalOrders = []
+  let registeredUsers;
+  let totalOrders = [];
 
   Product.find()
-    .populate('reviews')
+    .populate("reviews")
     .then((products) => {
       products.forEach((product) => {
         const objectProperty = product.title.split(" ").join("");
@@ -74,17 +74,22 @@ exports.getStatistics = (req, res, next) => {
     })
     .then(() => {
       User.find()
-        .populate("orders.productId")
+        // .populate("orders.productId")
         .then((users) => {
-          registeredUsers = users
+          registeredUsers = users;
           users.forEach((user) => {
-            user.orders.forEach((order) => {
-              totalOrders.push(order)
-              order.forEach((product) => {
-                const objProp = product.productId.title.split(" ").join("");
-                displayedProduct[objProp].quantity += product.quantity;
+            if (user.orders && user.orders.length > 0) {
+              user.orders.forEach((order) => {
+                totalOrders.push(order);
+                order.forEach((product) => {
+                  const objProp = product.productId.title.split(" ").join("");
+                  // displayedProduct[objProp].quantity += product.quantity;
+                  displayedProduct[objProp]
+                    ? (displayedProduct[objProp].quantity += product.quantity)
+                    : "";
+                });
               });
-            });
+            }
           });
         })
         .then(() => {
@@ -94,9 +99,9 @@ exports.getStatistics = (req, res, next) => {
             isLoggedIn: req.isLoggedIn,
             products: displayedProduct,
             props: productNames,
-            users : registeredUsers,
-            orders : totalOrders,
-            role : req.user.role
+            users: registeredUsers,
+            orders: totalOrders,
+            role: req.user.role,
           });
         })
         .catch((err) => console.error(err));
