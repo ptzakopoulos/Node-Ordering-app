@@ -35,40 +35,11 @@ const userSchema = new Schema({
       },
     ],
   },
-  orders: [
-    [
-      {
-        // productId: {
-        //   type: Schema.Types.ObjectId,
-        //   ref: "Product",
-        //   required: true,
-        // },
-        productId: {
-          type: Object,
-          required: true,
-        },
-        quantity: {
-          type: Number,
-          required: true,
-        },
-        // date: {
-        //   type: Object,
-        //   required: true,
-        // },
-      },
-    ],
-  ],
-  orderDate: [
-    {
-      type: String,
-      required: true,
-    },
-  ],
 });
 
 userSchema.methods.addToCart = function (product) {
   const cartProductIndex = this.cart.items.findIndex((e) => {
-    return e.productId.toString() === product._id.toString(); //Apo tin MongoDB
+    return e.productId._id.toString() === product._id.toString(); //Apo tin MongoDB
   });
   let newQuantity = 1;
   const updatedCartItems = [...this.cart.items];
@@ -141,21 +112,6 @@ userSchema.methods.clearCart = function () {
   this.cart = {
     items: [],
   };
-  return this.save();
-};
-
-userSchema.methods.sendOrder = function () {
-  const date = new Date().toLocaleString();
-
-  const newOrder = [...this.cart.items];
-
-  // const newOrder =this.cart.items.map((item) => {
-  //   return { quantity: item.quantity, productId: { ...item.productId._doc } };
-  // });
-
-  this.orders.push(newOrder);
-  this.orderDate.push(date);
-  this.cart.items = [];
   return this.save();
 };
 

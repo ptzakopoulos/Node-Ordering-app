@@ -1,6 +1,7 @@
 const Product = require("../Models/Product");
 const User = require("../Models/User");
 const Review = require("../Models/Reviews");
+const Orders = require("../Models/Orders");
 require("dotenv").config();
 const emailDOmain = process.env.EMAIL_DOMAIN;
 const emainApiKey = process.env.EMAIL_API_KEY;
@@ -64,8 +65,8 @@ exports.getCart = (req, res, next) => {
   req.user
     .populate("cart.items.productId")
     .then((user) => {
-      // const products = [...user.cart.items];
-      const products = user.cart.items;
+      const products = [...user.cart.items];
+      // const products = user.cart.items;
       totalProducts = 0;
       //Checking if any of the cart's products has been removed from the list
       const index = products.findIndex((product) => {
@@ -141,15 +142,18 @@ exports.postDeleteItem = (req, res, next) => {
 };
 
 exports.getOrders = (req, res, next) => {
-  console.log(req.params.token);
-  req.user
-    .populate("orders.productId")
-    .then((user) => {
+  let userOrders;
+
+  Orders.find()
+    .populate("user.userId")
+    .then((orders) => {
+      userOrders = orders.filter((order) => {
+        return order.user.userId._id.toString() === req.user._id.toString();
+      });
       res.render("user/orders", {
         pageTitle: "Your Orders",
         total: totalProducts,
-        orders: user.orders,
-        date: user.orderDate,
+        orders: userOrders,
         isLoggedIn: req.isLoggedIn,
         role: req.user.role,
       });
@@ -158,10 +162,32 @@ exports.getOrders = (req, res, next) => {
 };
 
 exports.postOrders = (req, res, next) => {
-  req.user
-    .sendOrder()
+  const cart = [...req.user.cart.items];
+  const date = new Date().toLocaleString();
+
+  const products = cart.map((product) => {
+    return {
+      quantity: product.quantity,
+      product: { ...product.productId._doc },
+    };
+  });
+
+  const newOrder = new Orders({
+    products: products,
+    user: {
+      name: req.user.name,
+      userId: req.user,
+    },
+    date: date,
+  });
+
+  newOrder
+    .save()
     .then(() => {
+      req.user.clearCart();
       totalProducts = 0;
+    })
+    .then(() => {
       res.redirect("/orders");
     })
     .catch((err) => console.error(err));
@@ -251,53 +277,98 @@ exports.postRegister = (req, res, next) => {
 exports.getReviews = (req, res, next) => {
   const productId = req.params.prodId;
 
-  Product.findById(productId)
-    .then((product) => {
-      Review.find({ productId: productId })
+  // Product.findById(productId)
+  //   .then((product) => {
+  //     Review.find({ productId: productId })
+  //       .populate("userId")
+  //       .then((reviews) => {
+  //         let hasPosted;
+  //         let hasOrdered;
+  //         if (req.isLoggedIn) {
+  //           hasPosted = reviews.some((e) => {
+  //             return e.userId.id === req.user.id;
+  //           });
+
+  //           req.user
+  //             .populate("orders.productId")
+  //             .then(() => {
+  //               console.log(req.user.id);
+  //               console.log(req.user._id);
+  //               hasOrdered = req.user.orders.some((order) => {
+  //                 return order.some((product) => {
+  //                   console.log(product.productId.id);
+  //                   return product.productId.id === productId;
+  //                 });
+  //               });
+  //             })
+  //             .then(() => {
+  //               Render(totalProducts, product, reviews, hasPosted, hasOrdered);
+  //             })
+  //             .catch((err) => console.error(err));
+  //         } else {
+  //           Render(totalProducts, product, reviews);
+  //         }
+  //       })
+  //       .catch((err) => console.error(err));
+  //   })
+  //   .catch((err) => console.error(err));
+
+  let hasOrdered = false;
+  let hasReviewd = false;
+
+  Orders.find()
+    .populate("user.userId")
+    .then((orders) => {
+      //Checking if the user has ordered this product
+      orders.forEach((order) => {
+        if (
+          req.user &&
+          order.user.userId._id.toString() === req.user.id.toString()
+        ) {
+          const validation = order.products.some((products) => {
+            return products.product._id.toString() === productId.toString();
+          });
+
+          validation && (hasOrdered = true);
+        }
+      });
+
+      Review.find()
+        .populate("productId")
         .populate("userId")
         .then((reviews) => {
-          let hasPosted;
-          let hasOrdered;
-          if (req.isLoggedIn) {
-            hasPosted = reviews.some((e) => {
-              return e.userId.id === req.user.id;
-            });
+          //Taking the reviews of the current product
+          const currentReviews = reviews.filter((review) => {
+            return review.productId
+              ? review.productId.id.toString() === productId.toString()
+              : "";
+          });
 
-            req.user
-              .populate("orders.productId")
-              .then(() => {
-                console.log(req.user.id);
-                console.log(req.user._id);
-                hasOrdered = req.user.orders.some((order) => {
-                  return order.some((product) => {
-                    return product.productId.id === productId;
-                  });
-                });
-              })
-              .then(() => {
-                Render(totalProducts, product, reviews, hasPosted, hasOrdered);
-              })
-              .catch((err) => console.error(err));
-          } else {
-            Render(totalProducts, product, reviews);
-          }
+          //Checking if the user has posted review
+          hasReviewd = currentReviews.some((review) => {
+            return req.user
+              ? review.userId._id.toString() === req.user.id.toString()
+              : false;
+          });
+
+          Product.findById(productId)
+            .then((product) => {
+              res.render("includes/productsReviews", {
+                pageTitle: "Reviews",
+                total: totalProducts,
+                product: product,
+                reviews: currentReviews,
+                isLoggedIn: req.isLoggedIn,
+                hasPosted: hasReviewd,
+                hasOrdered: hasOrdered,
+                role: req.isLoggedIn ? req.user.role : "guest",
+              });
+            })
+            .catch((err) => console.error(err));
         })
         .catch((err) => console.error(err));
     })
     .catch((err) => console.error(err));
-
-  const Render = (totalProducts, product, reviews, hasPosted, hasOrdered) => {
-    res.render("includes/productsReviews", {
-      pageTitle: "Reviews",
-      total: totalProducts,
-      product: product,
-      reviews: reviews,
-      isLoggedIn: req.isLoggedIn,
-      hasPosted: hasPosted,
-      hasOrdered: hasOrdered,
-      role: req.isLoggedIn ? req.user.role : "guest",
-    });
-  };
 };
 
 exports.postReview = (req, res, next) => {

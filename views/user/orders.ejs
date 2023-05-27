@@ -4,13 +4,13 @@ overalPrice = 0 %>
 <div class="orders-container">
   <div class="order-card">
     <% if(orders.length > 0) { %> <% orders.forEach((order,index) => { %>
-    <p class="date">Date : <%= date[index] %></p>
-    <% totalPrice = 0 %> <% order.forEach(cart => { %>
+    <p class="date">Date : <%= order.date %></p>
+    <% totalPrice = 0 %> <% order.products.forEach(product => { %>
     <div class="order-info">
-      <h1><%= cart.productId.title %></h1>
-      <h4>x<%= cart.quantity %></h4>
-      <% totalPrice += cart.quantity * cart.productId.price %> <% overalPrice +=
-      cart.quantity * cart.productId.price %>
+      <h1><%= product.product.title %></h1>
+      <h4>x<%= product.quantity %></h4>
+      <% totalPrice += product.quantity * product.product.price %> <%
+      overalPrice += product.quantity * product.product.price %>
     </div>
     <% }) %>
     <p class="total-price">Total Price : <%= totalPrice %></p>
