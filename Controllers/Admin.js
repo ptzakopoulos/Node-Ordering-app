@@ -1,5 +1,7 @@
+const Orders = require("../Models/Orders");
 const Product = require("../Models/Product");
 const User = require("../Models/User");
+require("colors");
 
 exports.postAddProduct = (req, res, next) => {
   const user = req.user;
@@ -60,6 +62,26 @@ exports.getStatistics = (req, res, next) => {
   let registeredUsers;
   let totalOrders = [];
 
+  let test1, test2, test3;
+
+  Orders.find()
+    .then((orders) => {
+      test1 = orders;
+    })
+    .then(() => {
+      User.find()
+        .then((users) => (test2 = users))
+        .then(() => {
+          Product.find()
+            .then((products) => (test3 = products))
+            .then(() => {
+              console.log(`Orders : `.green, test1.red);
+              console.log(`Users : `.green, test2.red);
+              console.log(`Products : `.green, test3.red);
+            });
+        });
+    });
+
   Product.find()
     .populate("reviews")
     .then((products) => {
@@ -83,7 +105,7 @@ exports.getStatistics = (req, res, next) => {
                 totalOrders.push(order);
                 order.forEach((product) => {
                   const objProp = product.productId.title.split(" ").join("");
-                  // displayedProduct[objProp].quantity += product.quantity;
+                  displayedProduct[objProp].quantity += product.quantity;
                   displayedProduct[objProp]
                     ? (displayedProduct[objProp].quantity += product.quantity)
                     : "";
