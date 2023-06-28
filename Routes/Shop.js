@@ -35,4 +35,10 @@ router.get("/reviews:prodId", controllers.getReviews);
 
 router.post("/reviews", controllers.postReview);
 
+router.get("/checkout", controllers.getCheckout);
+
+router.get("/checkout/success", controllers.postOrders);
+
+router.get("/checkout/cancel", controllers.getCheckout);
+
 module.exports = router;

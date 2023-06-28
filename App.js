@@ -9,6 +9,8 @@ const path = require("path");
 
 const app = express();
 
+const PORT = 3000;
+
 //Setting up Template engine
 app.set("view engine", "ejs");
 app.set("views", "views");
@@ -38,7 +40,7 @@ app.use(errorController.get404);
 mongoose
   .connect(dataBaseUrl)
   .then((result) => {
-    app.listen(3000);
-    console.log(`Server is listening to : `.blue, "3000".yellow);
+    app.listen(PORT);
+    console.log(`Server is listening to : `.blue, PORT);
   })
   .catch((err) => console.log(err));

@@ -11,7 +11,8 @@
     "nodemailer": "^6.9.2",
     "nodemon": "^2.0.21",
     "path": "^0.12.7",
-    "sass": "^1.62.1"
+    "sass": "^1.62.1",
+    "stripe": "^12.9.0"
   },
   "name": "node_class",
   "version": "1.0.0",
