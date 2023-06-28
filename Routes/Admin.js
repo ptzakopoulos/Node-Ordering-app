@@ -10,6 +10,13 @@ router.post("/deleteProduct", auth.isLoggedIn, controllers.postDeleteProduct);
 
 router.post("/editProduct", auth.isLoggedIn, controllers.postEditProduct);
 
-router.get("/statistics", auth.isLoggedIn, controllers.getStatistics);
+router.get(
+  "/statistics",
+  auth.isLoggedIn,
+  controllers.allUsers,
+  controllers.allOrders,
+  controllers.allProducts,
+  controllers.getStatistics
+);
 
 module.exports = router;

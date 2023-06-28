@@ -57,30 +57,13 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getStatistics = (req, res, next) => {
+  // console.log(req.users);
+  // console.log(req.orders);
+  // console.log(req.products);
   const displayedProduct = {};
   const productNames = [];
   let registeredUsers;
   let totalOrders = [];
-
-  let test1, test2, test3;
-
-  Orders.find()
-    .then((orders) => {
-      test1 = orders;
-    })
-    .then(() => {
-      User.find()
-        .then((users) => (test2 = users))
-        .then(() => {
-          Product.find()
-            .then((products) => (test3 = products))
-            .then(() => {
-              console.log(`Orders : `.green, test1.red);
-              console.log(`Users : `.green, test2.red);
-              console.log(`Products : `.green, test3.red);
-            });
-        });
-    });
 
   Product.find()
     .populate("reviews")
@@ -115,6 +98,7 @@ exports.getStatistics = (req, res, next) => {
           });
         })
         .then(() => {
+          console.log(req.orders);
           res.render("admin/statistics", {
             pageTitle: "Statistics",
             total: req.totalProducts,
@@ -128,4 +112,31 @@ exports.getStatistics = (req, res, next) => {
         })
         .catch((err) => console.error(err));
     });
+};
+
+exports.allUsers = (req, res, next) => {
+  User.find()
+    .then((users) => {
+      req.users = users;
+      next();
+    })
+    .catch((err) => console.error(err));
+};
+
+exports.allOrders = (req, res, next) => {
+  Orders.find()
+    .then((orders) => {
+      req.orders = orders;
+      next();
+    })
+    .catch((err) => console.error(err));
+};
+
+exports.allProducts = (req, res, next) => {
+  Product.find()
+    .then((products) => {
+      req.products = products;
+      next();
+    })
+    .catch((err) => console.error(err));
 };
