@@ -7,6 +7,15 @@ const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
 
+//Session
+const session = require("express-session");
+const MongoDbStore = require("connect-mongodb-session")(session);
+
+const store = new MongoDbStore({
+  uri: dataBaseUrl,
+  collection: "session",
+});
+
 const app = express();
 
 const PORT = 3000;
@@ -29,9 +38,42 @@ const shopRoutes = require("./Routes/Shop");
 const adminRoutes = require("./Routes/Admin");
 
 const middleWare = require("./Controllers/Shop");
+const User = require("./Models/User");
+
+//Session Middleware
+app.use(
+  session({
+    secret: "My secret",
+    resave: false,
+    saveUninitialized: false,
+    store: store,
+  })
+);
+
+app.use((req, res, next) => {
+  if (!req.session.user) {
+    return next();
+  }
+  User.findById(req.session.user._id)
+    .then((user) => {
+      let totalProducts = 0;
+      req.user = user;
+      req.isLoggedIn = true;
+
+      user.cart.items.forEach((item) => {
+        totalProducts += item.quantity;
+      });
+
+      req.totalProducts = totalProducts;
+
+      next();
+    })
+    .catch((err) => console.error(err));
+});
+
 //Listening to routes
-app.use(middleWare.validation, shopRoutes);
-app.use(middleWare.validation, adminRoutes);
+app.use(shopRoutes);
+app.use(adminRoutes);
 
 //Calling 404 Controllet in case of error 404
 app.use(errorController.get404);
