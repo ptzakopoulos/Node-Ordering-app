@@ -2,6 +2,8 @@ const stripe = require("stripe")(
   "sk_test_51NLTrKGzfhJ9pxzsgBP95lf4zluS7STVrSyTpFp8jkuEWsuThARZRgTOkSGS0rXu1CkU0wwNiE8BQp9TrhqiXEtO00Y7uxLFGT"
 );
 
+const bcrypt = require("bcryptjs");
+
 const Product = require("../Models/Product");
 const User = require("../Models/User");
 const Review = require("../Models/Reviews");
@@ -14,11 +16,7 @@ const mailgun = require("mailgun-js")({
   domain: emailDOmain,
 });
 
-const crypto = require("crypto");
-
 exports.getShop = (req, res, next) => {
-  // console.log(req.user);
-  // console.log(req.isLoggedIn);
   Product.find()
     .populate("reviews")
     .then((products) => {
@@ -193,13 +191,20 @@ exports.postLogin = (req, res, next) => {
 
   User.findOne({ email: email })
     .then((user) => {
-      if (user && user.password === password) {
-        req.session.user = user;
-        req.session.isLoggedIn = true;
-      } else {
+      if (!user) {
         return res.redirect("/login");
       }
-      res.redirect("/");
+      bcrypt
+        .compare(password, user.password)
+        .then((doMatch) => {
+          if (doMatch) {
+            req.session.user = user;
+            req.session.isLoggedIn = true;
+            return res.redirect("/");
+          }
+          res.redirect("/login");
+        })
+        .catch((err) => console.error(err));
     })
     .catch((err) => console.error(err));
 };
@@ -223,36 +228,41 @@ exports.getRegister = (req, res, next) => {
 exports.postRegister = (req, res, next) => {
   const member = "member";
   const email = req.body.email;
+  const password = req.body.password;
 
   User.findOne({ email: email })
     .then((user) => {
       if (user) {
         return res.redirect("/register");
       }
+      return bcrypt
+        .hash(password, 12)
+        .then((hashedPassword) => {
+          const newUser = new User({
+            name: req.body.name,
+            email: req.body.email,
+            password: hashedPassword,
+            role: member,
+          });
 
-      const newUser = new User({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password, //This should be encrypted
-        role: member,
-      });
+          const emailData = {
+            from: "Food Delivery App <tzakopoulosp@gmail.com>",
+            to: email,
+            subject: "Verification Code",
+            html: '<h1> Hello </h1> <a href="http://localhost:3000/">This is the verification code </a>',
+          };
 
-      const emailData = {
-        from: "Food Delivery App <tzakopoulosp@gmail.com>",
-        to: email,
-        subject: "Verification Code",
-        html: '<h1> Hello </h1> <a href="http://localhost:3000/">This is the verification code </a>',
-      };
+          //Email provider package should be changed.
+          mailgun.messages().send(emailData, function (error, body) {
+            console.log(body);
+          });
 
-      //Email provider package should be changed.
-      mailgun.messages().send(emailData, function (error, body) {
-        console.log(body);
-      });
-
-      newUser
-        .save()
-        .then(() => {
-          res.redirect("/login");
+          newUser
+            .save()
+            .then(() => {
+              res.redirect("/login");
+            })
+            .catch((err) => console.error(err));
         })
         .catch((err) => console.error(err));
     })

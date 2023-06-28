@@ -55,6 +55,7 @@
   </div>
   <% } %>
   <div class="products-field">
+
     <%- include('./user/productFilter.ejs') %> <% if(products.length > 0){
     for(let product of products.reverse()) { %>
 
@@ -64,7 +65,7 @@
           <img src="<%= product.imageUrl %>" alt="Image" />
         </a>
         <div class="product-info">
-          <h1 class="product-title"><%= product.title %></h1>
+          <h1 class="product-title"><%= product.title %></h1>          
           <p class="product-description"><%= product.description %></p>
         </div>
         <h3 class="product-price"><%= product.price %></h3>
