@@ -283,7 +283,7 @@ exports.getReviews = (req, res, next) => {
       orders.forEach((order) => {
         if (
           req.user &&
-          order.user.userId._id.toString() === req.user.id.toString()
+          order?.user.userId._id.toString() === req.user.id.toString()
         ) {
           const validation = order.products.some((products) => {
             return products.product._id.toString() === productId.toString();

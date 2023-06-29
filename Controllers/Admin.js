@@ -57,61 +57,41 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getStatistics = (req, res, next) => {
-  // console.log(req.users);
-  // console.log(req.orders);
-  // console.log(req.products);
   const displayedProduct = {};
   const productNames = [];
-  let registeredUsers;
-  let totalOrders = [];
+  let i = 0;
+  let productArray = [];
 
-  Product.find()
-    .populate("reviews")
-    .then((products) => {
-      products.forEach((product) => {
-        const objectProperty = product.title.split(" ").join("");
-        displayedProduct[objectProperty] = {
-          title: product.title,
-          quantity: 0,
-        };
-        productNames.push(objectProperty);
+  req.products.forEach((product, index) => {
+    productArray[index] = {
+      title: product.title,
+      quantity: 0,
+    };
+  });
+
+  req.orders.forEach((order) => {
+    order.products.forEach((product) => {
+      const index = productArray.findIndex((prod) => {
+        return prod?.title === product.product.title;
       });
-    })
-    .then(() => {
-      User.find()
-        // .populate("orders.productId")
-        .then((users) => {
-          registeredUsers = users;
-          users.forEach((user) => {
-            if (user.orders && user.orders.length > 0) {
-              user.orders.forEach((order) => {
-                totalOrders.push(order);
-                order.forEach((product) => {
-                  const objProp = product.productId.title.split(" ").join("");
-                  displayedProduct[objProp].quantity += product.quantity;
-                  displayedProduct[objProp]
-                    ? (displayedProduct[objProp].quantity += product.quantity)
-                    : "";
-                });
-              });
-            }
-          });
-        })
-        .then(() => {
-          console.log(req.orders);
-          res.render("admin/statistics", {
-            pageTitle: "Statistics",
-            total: req.totalProducts,
-            isLoggedIn: req.isLoggedIn,
-            products: displayedProduct,
-            props: productNames,
-            users: registeredUsers,
-            orders: totalOrders,
-            role: req.user.role,
-          });
-        })
-        .catch((err) => console.error(err));
+
+      if (index > -1) {
+        return (productArray[index].quantity += product.quantity);
+      }
+      i++;
     });
+  });
+  console.log(productArray);
+
+  res.render("admin/statistics", {
+    pageTitle: "Statistics",
+    total: req.totalProducts,
+    isLoggedIn: req.isLoggedIn,
+    products: productArray,
+    users: req.users,
+    orders: req.orders,
+    role: req.user.role,
+  });
 };
 
 exports.allUsers = (req, res, next) => {

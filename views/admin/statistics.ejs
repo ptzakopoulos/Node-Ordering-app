@@ -1,16 +1,8 @@
-<%- include('../includes/Head.ejs') %> <%- include('../includes/navigation.ejs')
-%>
+<%- include('../includes/Head.ejs') %> <%-
+include('../includes/navigation.ejs')%>
 <script src="/javascript/statistics.js" defer></script>
 <div class="statistics">
   <h1>Statistics</h1>
-
-  <% const quantities = [] %> <% const names = [] %> <% props.forEach(prop => {
-  names.push(prop) quantities.push(products[prop].quantity) }) %> <% const
-  sortedQuantities = [] const sortedNames = [] const count = props.length
-  for(let i = 0; i < count; i++) { const min = Math.min(...quantities)
-  sortedQuantities.push(min) const index = quantities.findIndex(e => { return e
-  === min }) sortedNames.push(names[index]) quantities.splice(index,1)
-  names.splice(index,1) } %>
 
   <select id="category">
     <option value="sales">Sales</option>
@@ -20,18 +12,28 @@
 
   <div class="sales" id="sales">
     <h1>Product Sales</h1>
-    <% for(let i = sortedQuantities.length - 1 ; i >= 0;i--) { %>
+    <select id="sales-sort">
+      <option value="all">Short By</option>
+      <option value="max">Most Sales</option>
+      <option value="min">Less Sales</option>
+    </select>
+    <% products.forEach(product => { %>
     <div class="product">
-      <h1><%= sortedNames[i] %></h1>
-      <h4>x<%= sortedQuantities[i] %></h4>
+      <h1 class="prod-title" value="<%= product.title %>">
+        <%= product.title %>
+      </h1>
+      <h4 class="prod-quantity" value="<%= product.quantity %>">
+        x<%= product.quantity %>
+      </h4>
     </div>
-    <% } %>
+    <% }) %>
   </div>
 
   <div class="users" id="users">
     <h1>Registered Users</h1>
     <% users.forEach(user => { %>
     <h5><%= user.name %></h5>
+    <h5><%= user.role %></h5>
     <% }) %>
     <h4>Total users : <%= users.length %></h4>
   </div>
@@ -40,10 +42,10 @@
     <h1>Orders</h1>
     <% orders.forEach(order => { %>
     <div class="order">
-      <% order.forEach(product => { %>
+      <% order.products.forEach(product => { %>
       <div class="product">
         <h4><%= product.quantity %>x</h4>
-        <h3><%= product.productId.title %></h3>
+        <h3><%= product.product.title %></h3>
       </div>
       <% }) %>
     </div>
