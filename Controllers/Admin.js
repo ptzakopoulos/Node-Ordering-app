@@ -57,8 +57,6 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getStatistics = (req, res, next) => {
-  const displayedProduct = {};
-  const productNames = [];
   let i = 0;
   let productArray = [];
 
@@ -81,7 +79,6 @@ exports.getStatistics = (req, res, next) => {
       i++;
     });
   });
-  console.log(productArray);
 
   res.render("admin/statistics", {
     pageTitle: "Statistics",

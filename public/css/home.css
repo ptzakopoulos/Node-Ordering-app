@@ -218,14 +218,10 @@
   border: 6px solid white;
   border-top: 6px solid transparent;
   border-radius: 50%;
-  -webkit-animation-name: loader;
-          animation-name: loader;
-  -webkit-animation-timing-function: linear;
-          animation-timing-function: linear;
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-  -webkit-animation-duration: 1s;
-          animation-duration: 1s;
+  animation-name: loader;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: 1s;
 }
 #loading-screen #loader1 {
   width: 70px;
@@ -235,22 +231,12 @@
   width: 50px;
   height: 50px;
   animation-direction: reverse;
-  -webkit-animation-duration: 0.5s;
-          animation-duration: 0.5s;
+  animation-duration: 0.5s;
 }
 #loading-screen #loader1 #loader2 #loader3 {
   width: 30px;
   height: 30px;
-  -webkit-animation-duration: 0.5s;
-          animation-duration: 0.5s;
-}
-@-webkit-keyframes loader {
-  from {
-    transform: rotateZ(0turn);
-  }
-  to {
-    transform: rotateZ(1turn);
-  }
+  animation-duration: 0.5s;
 }
 @keyframes loader {
   from {

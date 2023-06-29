@@ -1,74 +1,73 @@
 .statistics {
-    width : 100%;
-    padding : 100px;
+  width: 100%;
+  padding: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .active {
     display: flex;
+  }
+
+  & > div {
+    display: none;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
+    gap: 20px;
+  }
 
-    .active {
+  .sales {
+    .product {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      color: white;
+      border-radius: 5px;
+      border-bottom: 2px solid white;
+      padding: 20px;
+      box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.5);
+
+      h1,
+      h4 {
+        width: 50%;
         display: flex;
-    }
-
-    &>div {
-        display: none;
-        flex-direction: column;
-        justify-content: start;
         align-items: center;
-        gap : 20px;
+      }
+      h4 {
+        justify-content: end;
+      }
     }
+  }
 
-    .sales {
+  .orders {
+    .order {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      background-color: rgba(0, 0, 0, 0.9);
+      color: white;
+      border-radius: 5px;
+      border-bottom: 2px solid white;
+      padding: 20px;
+      box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.5);
 
-        .product {
-            display: flex;
-            gap : 20px;
-            align-items: center;
-            width : 100%;
-            background-color: rgba(0,0,0,0.9);
-            color : white;
-            border-radius: 5px;
-            border-bottom: 2px solid white;
-            padding : 20px;
-            box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.5);
-
-            h1,h4 {
-                width : 50%;
-                display: flex;
-                align-items: center;
-            }
-            h4 {
-                justify-content: end;
-            }
-        }
+      .product {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 30px;
+      }
     }
+  }
 
-    .orders {
-
-        .order {
-            width : 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            background-color: rgba(0,0,0,0.9);
-            color : white;
-            border-radius: 5px;
-            border-bottom: 2px solid white;
-            padding : 20px;
-            box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.5);
-
-            .product {
-                width : 100%;
-                display: flex;
-                align-items: center;
-                gap : 30px;
-            }
-        }
-    }
-
-    #category {
-        font-size: 20px;
-        width : 100px;
-    }
+  select {
+    font-size: 20px;
+    width: 150px;
+  }
 }
