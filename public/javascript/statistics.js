@@ -70,3 +70,11 @@ const sortHandler = (e) => {
 };
 
 sort.addEventListener("change", sortHandler);
+
+//Colors
+
+const roles = document.querySelectorAll(".users h5");
+
+roles.forEach((role) => {
+  role.classList.add(role.textContent);
+});

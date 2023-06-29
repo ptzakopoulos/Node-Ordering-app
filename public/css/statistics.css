@@ -59,4 +59,31 @@
 .statistics select {
   font-size: 20px;
   width: 150px;
+}
+.statistics .users {
+  flex-direction: column;
+  justify-content: start;
+}
+.statistics .users .details {
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.statistics .users .details h5 {
+  width: 50%;
+  border-left: 2px solid black;
+  padding: 20px;
+}
+.statistics .users .details h4 {
+  width: 50%;
+  padding: 20px;
+}
+.statistics .users .details .admin {
+  background-color: purple;
+  color: white;
+}
+.statistics .users .details .member {
+  background-color: rgb(196, 85, 6);
+  color: white;
 }/*# sourceMappingURL=statistics.css.map */
