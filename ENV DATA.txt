@@ -1,0 +1,4 @@
+DATABASE=mongodb+srv://psnod:panos123@cluster0.dgofkdg.mongodb.net/?retryWrites=true&w=majority
+EMAIL_DOMAIN=sandboxe0dc2be0e41f42f29e91d9bdea9ab81e.mailgun.org
+EMAIL_API_KEY=d5c3508b9a626e25524dfe782d6bf464-db4df449-23943fba
+STRIPE_SECRET_KEY=sk_test_51NLTrKGzfhJ9pxzsgBP95lf4zluS7STVrSyTpFp8jkuEWsuThARZRgTOkSGS0rXu1CkU0wwNiE8BQp9TrhqiXEtO00Y7uxLFGT

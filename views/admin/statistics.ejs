@@ -34,7 +34,7 @@ include('../includes/navigation.ejs')%>
     <% users.forEach(user => { %>
     <div class="details">
       <h4><%= user.name %></h4>
-      <h5><%= user.role %></h5>
+      <h5 class="<%= user.role %>"><%= user.role %></h5>
     </div>
     <% }) %>
     <h4>Total users : <%= users.length %></h4>

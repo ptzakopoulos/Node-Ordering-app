@@ -6,6 +6,7 @@ const dataBaseUrl = process.env.DATABASE;
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
+const helmet = require("helmet");
 
 //Session
 const session = require("express-session");
@@ -74,6 +75,7 @@ app.use((req, res, next) => {
 //Listening to routes
 app.use(shopRoutes);
 app.use(adminRoutes);
+app.use(helmet());
 
 //Calling 404 Controllet in case of error 404
 app.use(errorController.get404);

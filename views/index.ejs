@@ -59,7 +59,7 @@
     <%- include('./user/productFilter.ejs') %> <% if(products.length > 0){
     for(let product of products.reverse()) { %>
 
-    <div class="product-card" productType="all <%= product.type %>">
+    <div class="product-card" productType="all <%= product.type %>"  productName="<%= product.title %>">
       <div class="left-box">
         <a href="/reviews<%=product.id%>" name="prodId" value="product.id">
           <img src="<%= product.imageUrl %>" alt="Image" />
