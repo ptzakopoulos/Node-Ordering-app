@@ -183,7 +183,7 @@ It is a potential food ordering app with the following characteristics and featu
 
 <h1 style="font-size : 80px;"> Register </h1>
 <progressive-image>
-<img src="./preview/register.png">
+<img src="./preview/signup.png">
 </progressive-image>
 <br />
 <br />
@@ -208,14 +208,6 @@ It is a potential food ordering app with the following characteristics and featu
 <h1 style="font-size : 80px;"> Orders </h1>
 <progressive-image>
 <img src="./preview/orders.png">
-</progressive-image>
-<br />
-<br />
-<br />
-
-<h1 style="font-size : 80px;"> Login </h1>
-<progressive-image>
-<img src="./preview/login.png">
 </progressive-image>
 <br />
 <br />
