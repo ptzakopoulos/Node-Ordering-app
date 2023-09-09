@@ -11,3 +11,5 @@ Food Delivery App with Node Js
 - [ ] User Password Reset - Feature
 - [x] Adjust Scemas refs and objects
 - [x] Session Management
+
+:file_folder: Folder
