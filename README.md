@@ -14,7 +14,7 @@ Food Delivery App with Node Js
 
 :file_folder: Folder
 
-<h1 style="border : 2px solid white; font-size : 80px;"> hello </h1>
+<h1 style="font-size : 80px;"> hello </h1>
 <progressive-image>
 <img src="./public/images/404.jpg">
 </progressive-image>
