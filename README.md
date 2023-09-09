@@ -2,9 +2,11 @@
 
 This project is part of the final Assignment at SAE Athens Web Design & Development department.
 <br />
-It is a potential food ordering app with the following characteristics and features :
 <br />
 Link : http://orderingapp.tzakopoulosp.gr/
+<br />
+<br />
+It is a potential food ordering app with the following characteristics and features :
 <br />
 
 - [x] User system
@@ -47,6 +49,19 @@ Link : http://orderingapp.tzakopoulosp.gr/
 :orange_book: EJS
 :pencil2: FONTS
 :art: images
+
+<br/>
+<br/>
+:file_folder: Controllers <br />
+&nbsp; :ledger: Admin.js <br />
+&nbsp; :ledger: auth.js <br />
+&nbsp; :ledger: error404.js <br />
+&nbsp; :ledger: Shop.js <br />
+:file_folder: Controllers <br />
+&nbsp; :green_book: Admin.js <br />
+&nbsp; :green_book: auth.js <br />
+&nbsp; :green_book: error404.js <br />
+&nbsp; :green_book: Shop.js <br />
 
 <h1 style="font-size : 80px;"> hello </h1>
 <progressive-image>
