@@ -109,7 +109,7 @@ It is a potential food ordering app with the following characteristics and featu
 
 &nbsp; &nbsp; :pencil2: Outfit-VariableFont_wght.ttf
 
-### &nbsp; :file_folder: fonts <br />
+### &nbsp; :file_folder: images <br />
 
 &nbsp; &nbsp; :art: 404.jpg <br />
 &nbsp; &nbsp; :art: background.jpg <br />
@@ -163,7 +163,100 @@ It is a potential food ordering app with the following characteristics and featu
 &nbsp; :orange_book: index.ejs <br />
 :ledger: App.js <br />
 
-<h1 style="font-size : 80px;"> hello </h1>
+# Pages Preview
+
+<h1 style="font-size : 80px;"> Home - not logged in </h1>
 <progressive-image>
-<img src="./public/images/404.jpg">
+<img src="./preview/home.png">
 </progressive-image>
+<br />
+<br />
+<br />
+
+<h1 style="font-size : 80px;"> Login </h1>
+<progressive-image>
+<img src="./preview/login.png">
+</progressive-image>
+<br />
+<br />
+<br />
+
+<h1 style="font-size : 80px;"> Register </h1>
+<progressive-image>
+<img src="./preview/register.png">
+</progressive-image>
+<br />
+<br />
+<br />
+
+<h1 style="font-size : 80px;"> Home - logged in as user </h1>
+<progressive-image>
+<img src="./preview/logedin-home.png">
+</progressive-image>
+<br />
+<br />
+<br />
+
+<h1 style="font-size : 80px;"> Cart </h1>
+<progressive-image>
+<img src="./preview/cart.png">
+</progressive-image>
+<br />
+<br />
+<br />
+
+<h1 style="font-size : 80px;"> Orders </h1>
+<progressive-image>
+<img src="./preview/orders.png">
+</progressive-image>
+<br />
+<br />
+<br />
+
+<h1 style="font-size : 80px;"> Login </h1>
+<progressive-image>
+<img src="./preview/login.png">
+</progressive-image>
+<br />
+<br />
+<br />
+
+<h1 style="font-size : 80px;"> Reviews </h1>
+<progressive-image>
+<img src="./preview/reviews.png">
+</progressive-image>
+<br />
+<br />
+<br />
+
+<h1 style="font-size : 80px;"> Home - logged in as admin </h1>
+<progressive-image>
+<img src="./preview/admin-home.png">
+</progressive-image>
+<br />
+<br />
+<br />
+
+<h1 style="font-size : 80px;"> Add Product </h1>
+<progressive-image>
+<img src="./preview/add-product.png">
+</progressive-image>
+<br />
+<br />
+<br />
+
+<h1 style="font-size : 80px;"> Edit Product </h1>
+<progressive-image>
+<img src="./preview/edit-product.png">
+</progressive-image>
+<br />
+<br />
+<br />
+
+<h1 style="font-size : 80px;"> Statistics </h1>
+<progressive-image>
+<img src="./preview/statistics.png">
+</progressive-image>
+<br />
+<br />
+<br />
