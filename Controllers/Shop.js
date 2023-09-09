@@ -230,6 +230,10 @@ exports.postRegister = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
 
+  if (!email.trim() || !password.trim()) {
+    res.redirect("/register");
+  }
+
   User.findOne({ email: email })
     .then((user) => {
       if (user) {
@@ -249,7 +253,7 @@ exports.postRegister = (req, res, next) => {
             from: "Food Delivery App <tzakopoulosp@gmail.com>",
             to: email,
             subject: "Verification Code",
-            html: '<h1> Hello </h1> <a href="http://localhost:3000/">This is the verification code </a>',
+            html: '<h1> Hello </h1> <a href="http://localhost:3000/login">You are ready to login </a>',
           };
 
           //Email provider package should be changed.
