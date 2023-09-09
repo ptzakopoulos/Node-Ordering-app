@@ -111,57 +111,57 @@ It is a potential food ordering app with the following characteristics and featu
 
 ### &nbsp; :file_folder: fonts <br />
 
-&nbsp; &nbsp; :art: 404.jpg
-&nbsp; &nbsp; :art: background.jpg
-&nbsp; &nbsp; :art: favicon.png
-&nbsp; &nbsp; :art: notDelivered.svg
-&nbsp; &nbsp; :art: star.png
+&nbsp; &nbsp; :art: 404.jpg <br />
+&nbsp; &nbsp; :art: background.jpg <br />
+&nbsp; &nbsp; :art: favicon.png <br />
+&nbsp; &nbsp; :art: notDelivered.svg <br />
+&nbsp; &nbsp; :art: star.png <br />
 
 ### &nbsp; :file_folder: javascript <br />
 
-&nbsp; &nbsp; :ledger: addProduct.js
-&nbsp; &nbsp; :ledger: addToCartLoader.js
-&nbsp; &nbsp; :ledger: editProduct.js
-&nbsp; &nbsp; :ledger: filter.js
-&nbsp; &nbsp; :ledger: navBar.js
-&nbsp; &nbsp; :ledger: order.js
-&nbsp; &nbsp; :ledger: postReview.js
-&nbsp; &nbsp; :ledger: statistics.js
+&nbsp; &nbsp; :ledger: addProduct.js <br />
+&nbsp; &nbsp; :ledger: addToCartLoader.js <br />
+&nbsp; &nbsp; :ledger: editProduct.js <br />
+&nbsp; &nbsp; :ledger: filter.js <br />
+&nbsp; &nbsp; :ledger: navBar.js <br />
+&nbsp; &nbsp; :ledger: order.js <br />
+&nbsp; &nbsp; :ledger: postReview.js <br />
+&nbsp; &nbsp; :ledger: statistics.js <br />
 
 ### :file_folder: Routes <br />
 
-&nbsp; :ledger: Admin.js
-&nbsp; :ledger: Shop.js
+&nbsp; :ledger: Admin.js <br />
+&nbsp; :ledger: Shop.js <br />
 
 ### :file_folder: views <br />
 
 ### &nbsp; :file_folder: admin <br />
 
-&nbsp; &nbsp; :orange_book: addProduct.ejs
-&nbsp; &nbsp; :orange_book: editProduct.ejs
-&nbsp; &nbsp; :orange_book: statistics.ejs
+&nbsp; &nbsp; :orange_book: addProduct.ejs <br />
+&nbsp; &nbsp; :orange_book: editProduct.ejs <br />
+&nbsp; &nbsp; :orange_book: statistics.ejs <br />
 
 ### &nbsp; :file_folder: includes <br />
 
-&nbsp; &nbsp; :orange_book: add-to-cart.ejs
-&nbsp; &nbsp; :orange_book: commingSoon.ejs
-&nbsp; &nbsp; :orange_book: End.ejs
-&nbsp; &nbsp; :orange_book: Head.ejs
-&nbsp; &nbsp; :orange_book: navigation.ejs
-&nbsp; &nbsp; :orange_book: productReviews.ejs
+&nbsp; &nbsp; :orange_book: add-to-cart.ejs <br />
+&nbsp; &nbsp; :orange_book: commingSoon.ejs <br />
+&nbsp; &nbsp; :orange_book: End.ejs <br />
+&nbsp; &nbsp; :orange_book: Head.ejs <br />
+&nbsp; &nbsp; :orange_book: navigation.ejs <br />
+&nbsp; &nbsp; :orange_book: productReviews.ejs <br />
 
 ### &nbsp; :file_folder: user <br />
 
-&nbsp; &nbsp; :orange_book: cart.ejs
-&nbsp; &nbsp; :orange_book: checkout.ejs
-&nbsp; &nbsp; :orange_book: login.ejs
-&nbsp; &nbsp; :orange_book: orders.ejs
-&nbsp; &nbsp; :orange_book: productCard.ejs
-&nbsp; &nbsp; :orange_book: productFilter.ejs
-&nbsp; &nbsp; :orange_book: register.ejs
-&nbsp; :orange_book: 404.ejs
-&nbsp; :orange_book: index.ejs
-:ledger: App.js
+&nbsp; &nbsp; :orange_book: cart.ejs <br />
+&nbsp; &nbsp; :orange_book: checkout.ejs <br />
+&nbsp; &nbsp; :orange_book: login.ejs <br />
+&nbsp; &nbsp; :orange_book: orders.ejs <br />
+&nbsp; &nbsp; :orange_book: productCard.ejs <br />
+&nbsp; &nbsp; :orange_book: productFilter.ejs <br />
+&nbsp; &nbsp; :orange_book: register.ejs <br />
+&nbsp; :orange_book: 404.ejs <br />
+&nbsp; :orange_book: index.ejs <br />
+:ledger: App.js <br />
 
 <h1 style="font-size : 80px;"> hello </h1>
 <progressive-image>
