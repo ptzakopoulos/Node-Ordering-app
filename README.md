@@ -18,6 +18,7 @@ Link : http://orderingapp.tzakopoulosp.gr/
 # Technologies
 
 <br />
+
 - [x] Node Js (v18.15.0)
 - [x] bcryptjs (v2.4.3)
 - [x] body-parser (v1.20.2)
@@ -34,7 +35,7 @@ Link : http://orderingapp.tzakopoulosp.gr/
 - [x] path (v0.12.7)
 - [x] sass (v1.62.1)
 - [x] stripe (v12.9.0)
-<br />
+      <br />
 
 # Folder/File structure
 
