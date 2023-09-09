@@ -13,6 +13,3 @@ Food Delivery App with Node Js
 - [x] Session Management
 
 :file_folder: Folder
-:sparkles: : Styling
-
-<h1>Hello </h1>
