@@ -5,8 +5,6 @@ const controllers = require("../Controllers/Shop");
 
 router.get("/", controllers.getShop);
 
-// router.post("/changeRole", controllers.postChangeRole);
-
 router.get("/login", controllers.getLogin);
 
 router.post("/login", controllers.postLogin);

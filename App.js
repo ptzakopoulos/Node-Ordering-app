@@ -51,6 +51,7 @@ app.use(
   })
 );
 
+//Middleware responsible for session data transfer
 app.use((req, res, next) => {
   if (!req.session.user) {
     return next();

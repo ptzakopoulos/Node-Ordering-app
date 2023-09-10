@@ -1,27 +1,32 @@
+//Setting up Stripe
 const stripe = require("stripe")(
   "sk_test_51NLTrKGzfhJ9pxzsgBP95lf4zluS7STVrSyTpFp8jkuEWsuThARZRgTOkSGS0rXu1CkU0wwNiE8BQp9TrhqiXEtO00Y7uxLFGT"
 );
 
+//Calling bcrypt
 const bcrypt = require("bcryptjs");
 
+//Calling schemas
 const Product = require("../Models/Product");
 const User = require("../Models/User");
 const Review = require("../Models/Reviews");
 const Orders = require("../Models/Orders");
+//Extracting .end data
 require("dotenv").config();
 const emailDOmain = process.env.EMAIL_DOMAIN;
 const emainApiKey = process.env.EMAIL_API_KEY;
+//Setting up mailgun
 const mailgun = require("mailgun-js")({
   apiKey: emainApiKey,
   domain: emailDOmain,
 });
 
+//Controller responsible for displaying the home page of the website
 exports.getShop = (req, res, next) => {
   Product.find()
     .populate("reviews")
     .then((products) => {
       productCollection = products;
-      //Na to oloklirwsw | Na fainontai ta reviews sto home / shop
     })
     .then(() => {
       if (req.isLoggedIn) {
@@ -47,6 +52,7 @@ exports.getShop = (req, res, next) => {
     .catch((err) => console.error(err));
 };
 
+//Controller responsible for getting the user's cart
 exports.getCart = (req, res, next) => {
   req.user
     .populate("cart.items.productId")
@@ -77,6 +83,7 @@ exports.getCart = (req, res, next) => {
     .catch((err) => console.error(err));
 };
 
+//Controller responsible for sending the new data from user's cart to the database
 exports.postCart = (req, res, next) => {
   const productId = req.body.productId;
 
@@ -89,6 +96,7 @@ exports.postCart = (req, res, next) => {
     });
 };
 
+//Controller responsible for removing one item from the user's cart
 exports.postRemoveOne = (req, res, next) => {
   const productId = req.body.productId;
 
@@ -100,6 +108,7 @@ exports.postRemoveOne = (req, res, next) => {
     .catch((err) => console.error(err));
 };
 
+//Controller responsible for adding one item to the user's cart
 exports.postAddOne = (req, res, next) => {
   const productId = req.body.productId;
 
@@ -111,6 +120,7 @@ exports.postAddOne = (req, res, next) => {
     .catch((err) => console.error(err));
 };
 
+//Controller responsible for removing an item from the user's cart
 exports.postDeleteItem = (req, res, next) => {
   const productId = req.body.productId;
   req.user
@@ -121,6 +131,7 @@ exports.postDeleteItem = (req, res, next) => {
     .catch((err) => console.error(err));
 };
 
+//Controller responsible for getting the user's order
 exports.getOrders = (req, res, next) => {
   let userOrders;
   Orders.find()
@@ -140,6 +151,7 @@ exports.getOrders = (req, res, next) => {
     .catch((err) => console.error(err));
 };
 
+//Controller responsible for sending the user's order and updating the data into the database
 exports.postOrders = (req, res, next) => {
   req.user
     .populate("cart.items.productId")
@@ -176,6 +188,7 @@ exports.postOrders = (req, res, next) => {
     .catch((err) => console.error(err));
 };
 
+//Controller responsible for getting the login page
 exports.getLogin = (req, res, next) => {
   res.render("user/login", {
     pageTitle: "Login",
@@ -185,19 +198,23 @@ exports.getLogin = (req, res, next) => {
   });
 };
 
+//Controller responsible for user's loggin
 exports.postLogin = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
 
+  //Searching for the user
   User.findOne({ email: email })
     .then((user) => {
       if (!user) {
         return res.redirect("/login");
       }
+      //Decrypting the user's password to compare with the database
       bcrypt
         .compare(password, user.password)
         .then((doMatch) => {
           if (doMatch) {
+            //Setting up the sessions
             req.session.user = user;
             req.session.isLoggedIn = true;
             return res.redirect("/");
@@ -209,6 +226,7 @@ exports.postLogin = (req, res, next) => {
     .catch((err) => console.error(err));
 };
 
+//Controller responsible for user's loggin out
 exports.logout = (req, res, next) => {
   req.session.destroy((err) => {
     err && console.log(err);
@@ -216,6 +234,7 @@ exports.logout = (req, res, next) => {
   });
 };
 
+//Controller responsible for getting the register page
 exports.getRegister = (req, res, next) => {
   res.render("user/register", {
     pageTitle: "Register",
@@ -225,6 +244,8 @@ exports.getRegister = (req, res, next) => {
   });
 };
 
+//Controller responsible for new user's registration
+//Sending the new user's data to the database
 exports.postRegister = (req, res, next) => {
   const member = "member";
   const email = req.body.email;
@@ -236,9 +257,11 @@ exports.postRegister = (req, res, next) => {
 
   User.findOne({ email: email })
     .then((user) => {
+      //Checking if the user's email already exists
       if (user) {
         return res.redirect("/register");
       }
+      //Encrypting user's password
       return bcrypt
         .hash(password, 12)
         .then((hashedPassword) => {
@@ -249,6 +272,7 @@ exports.postRegister = (req, res, next) => {
             role: member,
           });
 
+          //Preparing email for the user's mail
           const emailData = {
             from: "Food Delivery App <tzakopoulosp@gmail.com>",
             to: email,
@@ -261,6 +285,7 @@ exports.postRegister = (req, res, next) => {
             console.log(body);
           });
 
+          //Creating new User into the database
           newUser
             .save()
             .then(() => {
@@ -335,8 +360,8 @@ exports.getReviews = (req, res, next) => {
     .catch((err) => console.error(err));
 };
 
+//Controller responsible for posting a user's review into a product
 exports.postReview = (req, res, next) => {
-  // const productId = req.body.productId;
   const reviewInfo = {
     productId: req.body.productId,
     userId: req.user.id,
@@ -345,6 +370,7 @@ exports.postReview = (req, res, next) => {
     score: req.body.score,
   };
 
+  //Creating new review into the database
   const review = new Review({
     title: reviewInfo.title,
     content: reviewInfo.content,
@@ -361,6 +387,7 @@ exports.postReview = (req, res, next) => {
     .catch((err) => console.error(err));
 };
 
+//Controller responsible for user's checkotut
 exports.getCheckout = (req, res, next) => {
   let products;
   let totalPrice = 0;
@@ -368,12 +395,14 @@ exports.getCheckout = (req, res, next) => {
   req.user
     .populate("cart.items.productId")
     .then((user) => {
+      //Getting user's cart and calculating the total price
       products = user.cart.items;
       totalPrice = 0;
       products.forEach((product) => {
         totalPrice += product.quantity * product.productId.price;
       });
 
+      //Connecting with stripe with user cart's details
       return stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         mode: "payment",

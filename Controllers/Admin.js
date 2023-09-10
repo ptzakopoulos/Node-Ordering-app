@@ -3,6 +3,7 @@ const Product = require("../Models/Product");
 const User = require("../Models/User");
 require("colors");
 
+//Controller responsible for adding a new product to the database
 exports.postAddProduct = (req, res, next) => {
   const user = req.user;
   const title = req.body.title;
@@ -13,6 +14,7 @@ exports.postAddProduct = (req, res, next) => {
 
   console.log(type);
 
+  //Creating new product into the database
   const newProduct = new Product({
     title: title,
     price: price,
@@ -27,14 +29,17 @@ exports.postAddProduct = (req, res, next) => {
   });
 };
 
+//Controller responsible for deleting a product from the database
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.deletedProdId;
 
+  //Removing a product from the database
   Product.findByIdAndRemove(prodId).then(() => {
     res.redirect("/");
   });
 };
 
+//Controller responsible for editting an existing product in the database
 exports.postEditProduct = (req, res, next) => {
   const prodId = req.body.productId;
   const updatedTItle = req.body.title;
@@ -42,6 +47,7 @@ exports.postEditProduct = (req, res, next) => {
   const updatedImageUrl = req.body.imageUrl;
   const updatedDesc = req.body.description;
 
+  //Searching for a specific product based on its id
   Product.findById(prodId)
     .then((product) => {
       product.title = updatedTItle;
@@ -56,6 +62,7 @@ exports.postEditProduct = (req, res, next) => {
     .catch((err) => console.error(err));
 };
 
+//Controller responsible for getting information about the statistics
 exports.getStatistics = (req, res, next) => {
   let i = 0;
   let productArray = [];
@@ -91,6 +98,8 @@ exports.getStatistics = (req, res, next) => {
   });
 };
 
+//Controller responsible for collecting all registered users
+//It is used as middleware for getStatistics
 exports.allUsers = (req, res, next) => {
   User.find()
     .then((users) => {
@@ -100,6 +109,8 @@ exports.allUsers = (req, res, next) => {
     .catch((err) => console.error(err));
 };
 
+//Controller responsible for collecting all orders
+//It is used as middleware for getStatistics
 exports.allOrders = (req, res, next) => {
   Orders.find()
     .then((orders) => {
@@ -109,6 +120,8 @@ exports.allOrders = (req, res, next) => {
     .catch((err) => console.error(err));
 };
 
+//Controller responsible for collecting all products
+//It is used as middleware for getStatistics
 exports.allProducts = (req, res, next) => {
   Product.find()
     .then((products) => {
