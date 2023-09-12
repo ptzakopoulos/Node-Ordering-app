@@ -1,37 +1,41 @@
 <!-- Script responsible for add Product sections -->
 <script src="/javascript/addProduct.js" defer></script>
-    <div class="add-product__container">
-        <button id="add-product__button" class="add-product__button">Add Product</button>
-        <div id="add-product__field" class="add-product__field">
-            <form action="/addProduct" method="POST">
-                <div class="add-product__section">
-                    <label>Product Title</label>
-                    <input class="input" type="text" name="title">
-                </div>
-                <div class="add-product__section">
-                    <label>Image URL</label>
-                    <input class="input"  type="text" name="imageUrl" />
-                </div>
-                <div class="add-product__section">
-                    <label>Price</label>
-                    <input class="input"  type="number" name="price" />
-                </div>
-                <div class="add-product__section">
-                    <label>Type</label>
-                    <select class="input" name="type">
-                        <option value="mexican">Mexican</option>
-                        <option value="italian">Italian</option>
-                        <option value="greek">Greek</option>
-                    </select>
-                </div>
-                <div class="add-product__section">
-                    <label>Description</label>
-                    <textarea class="input"  type="text" name="description"></textarea>
-                </div>
-                <div class="add-product__buttons">
-                    <button id="submit" type="submit" name="submit" disabled="true">Add</button>
-                    <button id="cancel" type="reset" name="reset">Cansel</button>
-                </div>
-            </form>
-        </div>
-    </div>
+<div class="add-product__container">
+  <button id="add-product__button" class="add-product__button">
+    Add Product
+  </button>
+  <div id="add-product__field" class="add-product__field">
+    <form action="/addProduct" method="POST">
+      <div class="add-product__section">
+        <label>Product Title</label>
+        <input class="input" type="text" name="title" />
+      </div>
+      <div class="add-product__section">
+        <label>Image URL</label>
+        <input class="input" type="text" name="imageUrl" />
+      </div>
+      <div class="add-product__section">
+        <label>Price</label>
+        <input class="input" type="number" name="price" />
+      </div>
+      <div class="add-product__section">
+        <label>Type</label>
+        <select class="input" name="type">
+          <option value="mexican">Mexican</option>
+          <option value="italian">Italian</option>
+          <option value="greek">Greek</option>
+        </select>
+      </div>
+      <div class="add-product__section">
+        <label>Description</label>
+        <textarea class="input" type="text" name="description"></textarea>
+      </div>
+      <div class="add-product__buttons">
+        <button id="submit" type="submit" name="submit" disabled="true">
+          Add
+        </button>
+        <button id="cancel" type="reset" name="reset">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
