@@ -229,22 +229,6 @@ It is a potential food ordering app with the following characteristics and featu
 <br />
 <br />
 
-<h1 style="font-size : 80px;"> Add Product </h1>
-<progressive-image>
-<img src="./preview/add-product.png">
-</progressive-image>
-<br />
-<br />
-<br />
-
-<h1 style="font-size : 80px;"> Edit Product </h1>
-<progressive-image>
-<img src="./preview/edit-product.png">
-</progressive-image>
-<br />
-<br />
-<br />
-
 <h1 style="font-size : 80px;"> Statistics </h1>
 <progressive-image>
 <img src="./preview/statistics.png">
