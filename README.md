@@ -251,4 +251,4 @@ It is a potential food ordering app with the following characteristics and featu
 </progressive-image>
 <br />
 <br />
-<br />
+<br />.
